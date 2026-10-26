@@ -23,7 +23,7 @@ const { title = defaultTitle, description = defaultDescription } = Astro.props
 const heroPreload640 = await getImage({ src: hero.banner.src, width: 640, format: 'webp' })
 const heroPreload1024 = await getImage({ src: hero.banner.src, width: 1024, format: 'webp' })
 const heroPreload1536 = await getImage({ src: hero.banner.src, width: 1536, format: 'webp' })
-const heroPreload1981 = await getImage({ src: hero.banner.src, width: 1981, format: 'webp' })
+const heroPreload1752 = await getImage({ src: hero.banner.src, width: 1752, format: 'webp' })
 const ogLogo = await getImage({ src: logoImg, width: 512, format: 'webp' })
 
 const ogImage = new URL(ogLogo.src, site.url).href
@@ -67,9 +67,9 @@ const jsonLd = {
     <link
       rel="preload"
       as="image"
-      href={heroPreload1981.src}
-      imagesrcset={`${heroPreload640.src} 640w, ${heroPreload1024.src} 1024w, ${heroPreload1536.src} 1536w, ${heroPreload1981.src} 1981w`}
-      imagesizes="(min-width: 1024px) 1536px, 220vw"
+      href={heroPreload1752.src}
+      imagesrcset={`${heroPreload640.src} 640w, ${heroPreload1024.src} 1024w, ${heroPreload1536.src} 1536w, ${heroPreload1752.src} 1752w`}
+      imagesizes="(min-width: 1024px) 1720px, 220vw"
       fetchpriority="high"
     />
     <link rel="preload" as="font" type="font/woff2" href={manropeLatin} crossorigin />
@@ -84,7 +84,7 @@ const jsonLd = {
       Pular para o conteúdo
     </a>
     <slot />
-    {whatsapp && <WhatsAppFloat number={whatsapp} />}
+    <WhatsAppFloat number={whatsapp} />
 
     <script is:inline>
       // Parâmetros de depuração, usados pelos scripts de captura. Não fazem nada numa
