@@ -18,6 +18,10 @@
   --color-accent-orange: #027653;
   --color-accent-orange-dark: #025f43;
   --color-brand-mint: #61e5a9;
+  /* Mockup de abertura (26/10/2026): verde vivo dos botões do header e do hero — o mais claro
+     que mantém 4,5:1 com texto branco — e o menta luminoso do destaque do H1. */
+  --color-brand-emerald: #07865a;
+  --color-brand-glow: #7cefc0;
   --color-neutral-light: #ffffff;
   --color-neutral-gray-100: #f2f8f6;
   --color-neutral-gray-200: #a0a0a0;

@@ -41,7 +41,8 @@ export const cta = {
 /* ------------------------------------------------------------------ header */
 
 export const header = {
-  tagline: site.product,
+  /** Mockup de abertura (26/10/2026): a tagline é só a categoria; a marca está no H1. */
+  tagline: 'Impressoras industriais',
 } as const
 
 /* -------------------------------------------------------------------- hero */
@@ -49,21 +50,27 @@ export const header = {
 export const hero = {
   eyebrow: 'Codificação industrial',
   title: site.product,
-  text: 'Codificação e rastreabilidade com precisão para a sua linha de produção, com equipamentos de alta performance e suporte especializado da Print Master.',
+  /** Trecho do H1 que vai para a segunda linha, em menta (mockup de 26/10/2026). */
+  highlight: 'Markem-Imaje',
+  text: 'Codificação e rastreabilidade com precisão para sua linha de produção, com o suporte especializado da Print Master.',
   banner: {
     src: heroBg,
     alt: 'Impressora jato de tinta Markem-Imaje 9750 em destaque sobre fundo verde-escuro',
   },
+  /** Legenda do equipamento do banner. */
+  caption: 'Markem-Imaje 9750',
   points: [
     { icon: 'barcode', line1: 'Codificação e', line2: 'rastreabilidade' },
-    { icon: 'gear', line1: 'Equipamentos de', line2: 'alta performance' },
+    { icon: 'gear', line1: 'Alta', line2: 'performance' },
     { icon: 'users', line1: 'Suporte', line2: 'especializado' },
   ],
 } as const satisfies {
   eyebrow: string
   title: string
+  highlight: string
   text: string
   banner: Photo
+  caption: string
   points: readonly [HeroPoint, HeroPoint, HeroPoint]
 }
 

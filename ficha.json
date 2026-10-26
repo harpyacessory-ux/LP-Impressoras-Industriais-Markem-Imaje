@@ -1,6 +1,6 @@
 {
   "ficha": 1,
-  "gerado": "2026-10-26T18:10:37.171Z",
+  "gerado": "2026-10-26T18:48:12.837Z",
   "origem": "docs/FICHA-LP.md",
   "padrao": "2.8.0",
   "cliente": "Print Master",
@@ -99,7 +99,7 @@
     "hero": {
       "eyebrow": "Codificação industrial",
       "title": "Impressoras industriais Markem-Imaje",
-      "text": "Codificação e rastreabilidade com precisão para a sua linha de produção, com equipamentos de alta performance e suporte especializado da Print Master.",
+      "text": "Codificação e rastreabilidade com precisão para sua linha de produção, com o suporte especializado da Print Master.",
       "points": [
         {
           "icon": "barcode",
@@ -108,8 +108,8 @@
         },
         {
           "icon": "gear",
-          "line1": "Equipamentos de",
-          "line2": "alta performance"
+          "line1": "Alta",
+          "line2": "performance"
         },
         {
           "icon": "users",

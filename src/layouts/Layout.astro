@@ -22,6 +22,7 @@ const { title = defaultTitle, description = defaultDescription } = Astro.props
 // Preload do LCP: mesmas larguras/formatos que o <Picture> do Hero.
 const heroPreload640 = await getImage({ src: hero.banner.src, width: 640, format: 'webp' })
 const heroPreload1024 = await getImage({ src: hero.banner.src, width: 1024, format: 'webp' })
+const heroPreload1536 = await getImage({ src: hero.banner.src, width: 1536, format: 'webp' })
 const heroPreload1981 = await getImage({ src: hero.banner.src, width: 1981, format: 'webp' })
 const ogLogo = await getImage({ src: logoImg, width: 512, format: 'webp' })
 
@@ -67,8 +68,8 @@ const jsonLd = {
       rel="preload"
       as="image"
       href={heroPreload1981.src}
-      imagesrcset={`${heroPreload640.src} 640w, ${heroPreload1024.src} 1024w, ${heroPreload1981.src} 1981w`}
-      imagesizes="100vw"
+      imagesrcset={`${heroPreload640.src} 640w, ${heroPreload1024.src} 1024w, ${heroPreload1536.src} 1536w, ${heroPreload1981.src} 1981w`}
+      imagesizes="(min-width: 1024px) 1536px, 220vw"
       fetchpriority="high"
     />
     <link rel="preload" as="font" type="font/woff2" href={manropeLatin} crossorigin />

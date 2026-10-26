@@ -80,14 +80,15 @@ conteudo:
   hero:
     eyebrow: Codificação industrial
     title: Impressoras industriais Markem-Imaje
-    text: Codificação e rastreabilidade com precisão para a sua linha de produção, com equipamentos de alta performance e suporte especializado da Print Master.
+    # texto e pontos do mockup de abertura aprovado em 26/10/2026
+    text: Codificação e rastreabilidade com precisão para sua linha de produção, com o suporte especializado da Print Master.
     points:
       - icon: barcode
         line1: Codificação e
         line2: rastreabilidade
       - icon: gear
-        line1: Equipamentos de
-        line2: alta performance
+        line1: Alta
+        line2: performance
       - icon: users
         line1: Suporte
         line2: especializado
