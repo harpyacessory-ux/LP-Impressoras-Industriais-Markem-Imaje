@@ -120,7 +120,8 @@ blocos:
     papeis: [Produção, Engenharia, Compras]
     eyebrow: Equipamentos
     title: Impressoras industriais por tecnologia
-    text: 'Datadores, codificadoras e etiquetadoras Markem-Imaje organizados por tecnologia: jato de tinta contínuo, transferência térmica e Print & Apply.'
+    # variante local do mockup de 26/10/2026: abas por tecnologia, cards com painel verde-escuro e faixa de ajuda
+    text: Datadores, codificadoras e etiquetadoras Markem-Imaje para as necessidades da sua produção.
     groups:
       - id: jato-de-tinta
         label: Jato de tinta contínuo

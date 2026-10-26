@@ -22,6 +22,8 @@
      que mantém 4,5:1 com texto branco — e o menta luminoso do destaque do H1. */
   --color-brand-emerald: #07865a;
   --color-brand-glow: #7cefc0;
+  /* Mockup da vitrine (26/10/2026): círculo da seta nos cards. */
+  --color-brand-leaf: #1aa57a;
   --color-neutral-light: #ffffff;
   --color-neutral-gray-100: #f2f8f6;
   --color-neutral-gray-200: #a0a0a0;

@@ -41,7 +41,8 @@
       ],
       "exampleHash": "659a50238d10e7aa",
       "ctas": [
-        "vitrine-{item.id}"
+        "vitrine-{item.id}",
+        "vitrine-ajuda"
       ],
       "contract": {
         "itemsPath": "items",
@@ -85,7 +86,8 @@
           "height": 160,
           "alpha": null
         }
-      ]
+      ],
+      "localVariant": "Print Master 26/10/2026 — mockup: grupos em abas com contagem, cards com painel verde-escuro (marca, modelo e Ver equipamento) e faixa de ajuda (docs/BRIEFING.md)"
     },
     {
       "slug": "processo",

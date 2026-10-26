@@ -2,11 +2,13 @@
 /**
  * Vitrine de produtos — fase "oferta" da biblioteca B2.
  *
- * Duas formas, resolvidas pelo conteúdo e não por entrada de briefing:
+ * VARIANTE LOCAL — Print Master, mockup de 26/10/2026 (docs/BRIEFING.md): os grupos viram
+ * abas acessíveis, com a contagem de modelos ao lado; cada card tem a foto grande em cima e um
+ * painel verde-escuro com a marca, o modelo em destaque e "Ver equipamento"; uma faixa de ajuda
+ * fecha a seção. `npm run compose` sobrescreve este arquivo com o da biblioteca: ao recompor,
+ * reaplique a variante.
  *
- *   sem grupos  → uma grade de 2 colunas no mobile e 4 no desktop;
- *   com grupos  → uma prateleira por grupo, com a logo (ou o nome) no cabeçalho,
- *                 em trilho horizontal no mobile e grade no desktop.
+ * Sem grupos, a vitrine continua uma grade só, sem abas.
  *
  * As duas invariantes do conteúdo são verificadas aqui, no build, porque o
  * `contract` do manifesto não expressa condição entre itens: descrição é tudo ou
@@ -15,7 +17,6 @@
 import { Image } from 'astro:assets'
 import Section from '@components/Section.astro'
 import Icon from '@components/Icon.astro'
-import SectionHeader from '@components/SectionHeader.astro'
 import type { SectionProps } from '@lib/layout'
 import { showcase, type ShowcaseGroup, type ShowcaseItem } from '@data/sections/vitrine'
 
@@ -38,7 +39,7 @@ const showText = described === items.length
 
 const groupIds = new Set(groups.map((group) => group.id))
 for (const item of items) {
-  // Com grupos, item sem grupo não cai em prateleira nenhuma e sumiria da página em silêncio.
+  // Com grupos, item sem grupo não cai em aba nenhuma e sumiria da página em silêncio.
   if ((groups.length || item.group) && !groupIds.has(item.group)) {
     throw new Error(
       item.group
@@ -48,159 +49,235 @@ for (const item of items) {
   }
 }
 
-/** Com grupos, uma prateleira por grupo; sem grupos, uma só, em grade. */
-const railed = groups.length > 0
-const shelves = railed
+/** Com grupos, uma aba por grupo; sem grupos, um painel só, sem abas. */
+const tabbed = groups.length > 0
+const shelves = tabbed
   ? groups.map((group) => ({
-      group,
+      id: group.id,
+      label: group.label,
       items: items.filter((item) => item.group === group.id),
     }))
-  : [{ group: null, items: [...items] }]
+  : [{ id: 'todos', label: showcase.title, items: [...items] }]
 
 for (const shelf of shelves) {
   if (!shelf.items.length) {
     throw new Error(
-      `vitrine: o grupo "${shelf.group?.id}" está sem itens. Remova o grupo ou aponte itens para ele.`,
+      `vitrine: o grupo "${shelf.id}" está sem itens. Remova o grupo ou aponte itens para ele.`,
     )
   }
 }
+
+const countLabel = (n: number) => `${n} ${n === 1 ? 'modelo' : 'modelos'}`
+
+/** O card mostra a marca em cima e o modelo em destaque: "Markem-Imaje 9018" → "9018". */
+const modelOf = (title: string) =>
+  title.startsWith(`${showcase.brand} `) ? title.slice(showcase.brand.length + 1) : title
+
+/** Número curto em destaque; nome longo desce de tamanho para caber no card. */
+const modelSize = (model: string) =>
+  model.length <= 6
+    ? 'text-[1.9rem] sm:text-[2.1rem]'
+    : model.length <= 12
+      ? 'text-[1.45rem]'
+      : 'text-[1.15rem]'
 ---
 
-<Section id="vitrine" tone={tone} rhythm={rhythm}>
-  <SectionHeader
-    eyebrow={showcase.eyebrow}
-    title={showcase.title}
-    text={showcase.text}
-    width="2xl"
-  />
+<Section id="vitrine" tone={tone} rhythm={rhythm} data-showcase>
+  <div class="max-w-4xl">
+    <span class="inline-flex items-center gap-3 font-sans text-[12px] font-semibold tracking-[0.22em] text-ink-soft uppercase">
+      <span aria-hidden="true" class="h-[3px] w-6 rounded-full bg-accent-orange"></span>
+      {showcase.eyebrow}
+    </span>
+    <h2 class="mt-3 font-display text-3xl leading-[1.08] font-extrabold tracking-[-0.025em] text-ink sm:text-4xl lg:text-[2.9rem]">
+      {showcase.title}
+    </h2>
+    <p class="mt-3 font-sans text-[15px] leading-relaxed text-ink-soft sm:text-[17px]">
+      {showcase.text}
+    </p>
+  </div>
 
-  <div class="mt-9 flex flex-col gap-10">
-    {shelves.map((shelf) => (
-      <div data-showcase-shelf>
-        {shelf.group && (
-          <div class="flex items-center gap-4 border-b border-neutral-gray-200/70 pb-3">
-            <h3 class="flex min-w-0 items-center">
-              {shelf.group.logo ? (
-                <Image
-                  src={shelf.group.logo.src}
-                  alt={shelf.group.logo.alt}
-                  format="webp"
-                  width={220}
-                  loading="lazy"
-                  decoding="async"
-                  class="h-8 w-auto max-w-[120px] object-contain"
-                />
-              ) : (
-                <span class="font-display text-lg leading-snug font-extrabold text-ink">
-                  {shelf.group.label}
-                </span>
-              )}
-            </h3>
-            <span class="ml-auto shrink-0 font-sans text-[12px] font-semibold tracking-[0.16em] text-ink-soft uppercase">
-              {shelf.items.length} itens
-            </span>
-          </div>
-        )}
+  <div class="mt-8 flex flex-wrap items-center gap-x-4 gap-y-4">
+    {tabbed && (
+      <div
+        role="tablist"
+        aria-label="Tecnologias"
+        class="scroll-track -mx-6 flex max-w-[calc(100%+3rem)] gap-3 overflow-x-auto px-6 pb-1 sm:mx-0 sm:max-w-full sm:px-0"
+      >
+        {shelves.map((shelf, i) => (
+          <button
+            type="button"
+            role="tab"
+            id={`vitrine-aba-${shelf.id}`}
+            aria-controls={`vitrine-painel-${shelf.id}`}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            tabindex={i === 0 ? 0 : -1}
+            data-showcase-tab
+            data-count={countLabel(shelf.items.length)}
+            class="shrink-0 rounded-lg border border-neutral-gray-200/80 bg-neutral-light px-5 py-3 font-sans text-[15px] font-medium whitespace-nowrap text-ink transition-colors duration-200 hover:border-primary-dark/40 aria-selected:border-primary-dark aria-selected:bg-primary-dark aria-selected:font-semibold aria-selected:text-neutral-light sm:px-8 sm:text-base"
+          >
+            {shelf.label}
+          </button>
+        ))}
+      </div>
+    )}
+    <span
+      class="ml-auto shrink-0 font-sans text-[12px] font-semibold tracking-[0.22em] text-ink-soft uppercase"
+      aria-live="polite"
+      data-showcase-count
+    >
+      {countLabel(shelves[0].items.length)}
+    </span>
+  </div>
 
-        <ul
-          data-showcase-rail
-          class:list={[
-            'mt-5 gap-4 lg:gap-5',
-            railed
-              ? 'scroll-track -mx-6 flex snap-x snap-mandatory overflow-x-auto px-6 pb-3 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0 lg:pb-0'
-              : 'grid grid-cols-2 lg:grid-cols-4',
-          ]}
-        >
-          {shelf.items.map((item) => (
-            <li class:list={[railed && 'w-[78%] shrink-0 snap-start sm:w-[44%] lg:w-auto']}>
+  {shelves.map((shelf, i) => (
+    <div
+      role={tabbed ? 'tabpanel' : undefined}
+      id={`vitrine-painel-${shelf.id}`}
+      aria-labelledby={tabbed ? `vitrine-aba-${shelf.id}` : undefined}
+      hidden={i !== 0}
+      data-showcase-panel
+      class="showcase-panel mt-6"
+    >
+      <ul
+        data-showcase-rail
+        aria-label={shelf.label}
+        class="scroll-track -mx-6 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-3 lg:mx-0 lg:scroll-px-0 lg:grid lg:grid-cols-5 lg:gap-5 lg:overflow-visible lg:px-0 lg:pb-0"
+      >
+        {shelf.items.map((item) => {
+          const model = modelOf(item.title)
+          return (
+            <li class="w-[66%] shrink-0 snap-start sm:w-[40%] lg:w-auto">
               <button
                 type="button"
                 data-cta={`vitrine-${item.id}`}
-                class="btn-slave-whats showcase-card group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-neutral-gray-200/70 bg-neutral-light text-left shadow-[0_1px_2px_rgba(13,29,48,0.05)] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1.5 hover:border-accent-orange/50 hover:shadow-[0_28px_56px_-28px_rgba(0,33,71,0.35)]"
+                class="btn-slave-whats showcase-card group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-neutral-gray-200/70 bg-neutral-light text-left shadow-[0_18px_40px_-28px_rgba(6,67,55,0.45)] transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_32px_60px_-30px_rgba(6,67,55,0.6)]"
               >
-                <span
-                  aria-hidden="true"
-                  class="absolute inset-x-0 top-0 z-10 h-[3px] origin-left scale-x-0 bg-accent-orange transition-transform duration-300 ease-out group-hover:scale-x-100"
-                />
-
-                <span class="showcase-card__stage relative flex h-40 items-center justify-center overflow-hidden">
+                <span class="showcase-card__stage flex aspect-[4/3] items-center justify-center overflow-hidden">
                   <Image
                     src={item.photo.src}
                     alt={item.photo.alt}
                     format="webp"
-                    width={360}
+                    widths={[320, 480, 640]}
+                    sizes="(min-width: 1024px) 240px, (min-width: 640px) 40vw, 66vw"
                     loading="lazy"
                     decoding="async"
-                    class="relative z-[1] max-h-[7.75rem] w-auto max-w-[78%] object-contain mix-blend-multiply transition-transform duration-500 ease-out group-hover:scale-[1.07]"
+                    class="h-full w-full object-contain p-3 transition-transform duration-500 ease-out group-hover:scale-[1.05]"
                   />
                 </span>
 
-                <span class="flex flex-1 items-start justify-between gap-3 px-5 pt-4 pb-4">
-                  <span class="flex min-w-0 flex-col gap-1.5">
-                    <span class="font-display text-[15px] leading-snug font-extrabold text-ink">
-                      {item.title}
-                    </span>
-                    {showText && (
-                      <span class="font-sans text-[13px] leading-relaxed text-ink-soft">
-                        {item.description}
-                      </span>
-                    )}
+                <span class="showcase-card__panel flex flex-1 flex-col px-4 pt-4 pb-4 sm:px-5">
+                  <span class="font-sans text-[10.5px] font-bold tracking-[0.18em] text-neutral-light/85 uppercase">
+                    {showcase.brand}
                   </span>
-                  <span class="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-neutral-gray-100 text-primary-dark transition-[background-color,color,transform] duration-300 group-hover:translate-x-0.5 group-hover:bg-accent-orange group-hover:text-neutral-light">
-                    <Icon name="arrow-right" class="size-3.5" />
+                  <span
+                    class:list={[
+                      'mt-0.5 font-display leading-[1.12] font-extrabold tracking-[-0.01em] text-neutral-light',
+                      modelSize(model),
+                    ]}
+                  >
+                    {model}
+                  </span>
+                  {showText && (
+                    <span class="mt-1.5 font-sans text-[12.5px] leading-relaxed text-neutral-light/75">
+                      {item.description}
+                    </span>
+                  )}
+                  <span aria-hidden="true" class="min-h-3 flex-1" />
+                  <span class="flex items-center justify-between gap-3 border-t border-white/15 pt-3">
+                    <span class="font-sans text-[13.5px] text-neutral-light/90">
+                      {showcase.itemCta}
+                    </span>
+                    <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand-leaf text-neutral-light transition-transform duration-300 group-hover:translate-x-0.5">
+                      <Icon name="arrow-right" class="size-4" />
+                    </span>
                   </span>
                 </span>
               </button>
             </li>
-          ))}
-        </ul>
+          )
+        })}
+      </ul>
 
-        {railed && shelf.items.length > 1 && (
-          <div class="mt-3 flex items-center justify-center gap-3 lg:hidden">
-            <button
-              type="button"
-              data-rail-prev
-              aria-label={`Produto anterior de ${shelf.group?.label}`}
-              class="flex size-10 items-center justify-center rounded-full border border-neutral-gray-200 bg-neutral-light text-primary-dark transition-colors hover:border-accent-orange hover:text-accent-orange"
-            >
-              <Icon name="chevron-right" class="size-4 rotate-180" />
-            </button>
-            <button
-              type="button"
-              data-rail-next
-              aria-label={`Próximo produto de ${shelf.group?.label}`}
-              class="flex size-10 items-center justify-center rounded-full border border-neutral-gray-200 bg-neutral-light text-primary-dark transition-colors hover:border-accent-orange hover:text-accent-orange"
-            >
-              <Icon name="chevron-right" class="size-4" />
-            </button>
-          </div>
-        )}
-      </div>
-    ))}
+      {shelf.items.length > 1 && (
+        <div class="mt-3 flex items-center justify-center gap-3 lg:hidden">
+          <button
+            type="button"
+            data-rail-prev
+            aria-label={`Modelo anterior de ${shelf.label}`}
+            class="flex size-10 items-center justify-center rounded-full border border-neutral-gray-200 bg-neutral-light text-primary-dark transition-colors hover:border-accent-orange hover:text-accent-orange"
+          >
+            <Icon name="chevron-right" class="size-4 rotate-180" />
+          </button>
+          <button
+            type="button"
+            data-rail-next
+            aria-label={`Próximo modelo de ${shelf.label}`}
+            class="flex size-10 items-center justify-center rounded-full border border-neutral-gray-200 bg-neutral-light text-primary-dark transition-colors hover:border-accent-orange hover:text-accent-orange"
+          >
+            <Icon name="chevron-right" class="size-4" />
+          </button>
+        </div>
+      )}
+    </div>
+  ))}
+
+  <div class="mt-10 flex flex-col gap-3 border-t border-neutral-gray-200/80 pt-6 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+    <p class="font-display text-lg leading-snug font-bold text-ink sm:text-xl lg:text-[22px]">
+      {showcase.help.text}
+    </p>
+    <button
+      type="button"
+      data-cta="vitrine-ajuda"
+      class="btn-slave-whats group inline-flex shrink-0 items-center gap-2 self-start font-sans text-[15px] font-semibold text-primary-dark underline decoration-1 underline-offset-[5px] transition-colors duration-200 hover:text-accent-orange sm:self-auto"
+    >
+      {showcase.help.cta}
+      <Icon
+        name="arrow-right"
+        class="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
+      />
+    </button>
   </div>
 </Section>
 
 <style>
-  /* Mesmo palco claro dos cards de produto: gradiente suave + malha de pontos
-     que esmaece nas bordas. O `mix-blend-multiply` da foto come o fundo branco
-     das imagens de catálogo, então recorte e fundo branco convivem no grid. */
+  /* Palco claro da foto: o recorte do produto pousa sobre um cinza que clareia para baixo. */
   .showcase-card__stage {
-    background-image: linear-gradient(180deg, #f5f7fa 0%, #ffffff 100%);
+    background-image: linear-gradient(180deg, #f3f6f5 0%, #ffffff 100%);
   }
 
-  .showcase-card__stage::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(circle, rgba(0, 33, 71, 0.16) 1px, transparent 1.2px);
-    background-size: 18px 18px;
-    mask-image: radial-gradient(ellipse at center, transparent 32%, black 90%);
-    -webkit-mask-image: radial-gradient(ellipse at center, transparent 32%, black 90%);
-    opacity: 0.7;
-    pointer-events: none;
+  /* Painel verde-escuro do card, com um brilho sutil no topo. */
+  .showcase-card__panel {
+    background:
+      radial-gradient(120% 90% at 0% 0%, rgb(255 255 255 / 0.07) 0%, transparent 60%),
+      linear-gradient(
+        165deg,
+        var(--color-primary-dark-800) 0%,
+        var(--color-primary-dark) 55%,
+        var(--color-primary-dark-900) 100%
+      );
+  }
+
+  /* Troca de aba: o painel novo entra subindo 6px. */
+  .showcase-panel:not([hidden]) {
+    animation: showcase-in 320ms ease-out;
+  }
+
+  @keyframes showcase-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .showcase-panel:not([hidden]) {
+      animation: none;
+    }
+
     .showcase-card,
     .showcase-card * {
       transition: none !important;
@@ -215,20 +292,65 @@ for (const shelf of shelves) {
 <script>
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-  document.querySelectorAll<HTMLElement>('[data-showcase-shelf]').forEach((shelf) => {
-    const rail = shelf.querySelector<HTMLElement>('[data-showcase-rail]')
-    const prev = shelf.querySelector<HTMLButtonElement>('[data-rail-prev]')
-    const next = shelf.querySelector<HTMLButtonElement>('[data-rail-next]')
-    if (!rail || !prev || !next) return
+  document.querySelectorAll<HTMLElement>('[data-showcase]').forEach((root) => {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[data-showcase-tab]')]
+    const panels = [...root.querySelectorAll<HTMLElement>('[data-showcase-panel]')]
+    const count = root.querySelector<HTMLElement>('[data-showcase-count]')
 
-    const step = () => {
-      const card = rail.querySelector<HTMLElement>('li')
-      return card ? card.offsetWidth + 16 : rail.clientWidth * 0.8
+    const select = (index: number, focus = false) => {
+      tabs.forEach((tab, i) => {
+        const on = i === index
+        tab.setAttribute('aria-selected', String(on))
+        tab.tabIndex = on ? 0 : -1
+      })
+      panels.forEach((panel, i) => {
+        panel.hidden = i !== index
+      })
+      if (count) count.textContent = tabs[index].dataset.count ?? ''
+      if (focus) tabs[index].focus()
     }
-    const go = (dir: number) =>
-      rail.scrollBy({ left: dir * step(), behavior: reduce ? 'auto' : 'smooth' })
 
-    prev.addEventListener('click', () => go(-1))
-    next.addEventListener('click', () => go(1))
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(i))
+      // Setas, Home e End movem entre as abas (roving tabindex).
+      tab.addEventListener('keydown', (event) => {
+        const last = tabs.length - 1
+        const to =
+          event.key === 'ArrowRight'
+            ? i === last
+              ? 0
+              : i + 1
+            : event.key === 'ArrowLeft'
+              ? i === 0
+                ? last
+                : i - 1
+              : event.key === 'Home'
+                ? 0
+                : event.key === 'End'
+                  ? last
+                  : -1
+        if (to < 0) return
+        event.preventDefault()
+        select(to, true)
+      })
+    })
+
+    // Trilho do mobile: setas que rolam um card por vez.
+    panels.forEach((panel) => {
+      const rail = panel.querySelector<HTMLElement>('[data-showcase-rail]')
+      const prev = panel.querySelector<HTMLButtonElement>('[data-rail-prev]')
+      const next = panel.querySelector<HTMLButtonElement>('[data-rail-next]')
+      if (!rail || !prev || !next) return
+
+      const step = () => {
+        const card = rail.querySelector<HTMLElement>('li')
+        return card ? card.offsetWidth + 16 : rail.clientWidth * 0.8
+      }
+      const go = (dir: number) =>
+        rail.scrollBy({ left: dir * step(), behavior: reduce ? 'auto' : 'smooth' })
+
+      prev.addEventListener('click', () => go(-1))
+      next.addEventListener('click', () => go(1))
+    })
   })
 </script>

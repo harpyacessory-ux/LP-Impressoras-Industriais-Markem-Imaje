@@ -1,6 +1,6 @@
 {
   "ficha": 1,
-  "gerado": "2026-10-26T18:48:12.837Z",
+  "gerado": "2026-10-26T19:12:36.269Z",
   "origem": "docs/FICHA-LP.md",
   "padrao": "2.8.0",
   "cliente": "Print Master",
@@ -146,7 +146,7 @@
       "conteudo": {
         "eyebrow": "Equipamentos",
         "title": "Impressoras industriais por tecnologia",
-        "text": "Datadores, codificadoras e etiquetadoras Markem-Imaje organizados por tecnologia: jato de tinta contínuo, transferência térmica e Print & Apply.",
+        "text": "Datadores, codificadoras e etiquetadoras Markem-Imaje para as necessidades da sua produção.",
         "groups": [
           {
             "id": "jato-de-tinta",

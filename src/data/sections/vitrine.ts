@@ -42,7 +42,14 @@ export interface ShowcaseItem {
 export const showcase = {
   eyebrow: 'Equipamentos',
   title: 'Impressoras industriais por tecnologia',
-  text: 'Datadores, codificadoras e etiquetadoras Markem-Imaje organizados por tecnologia: jato de tinta contínuo, transferência térmica e Print & Apply.',
+  text: 'Datadores, codificadoras e etiquetadoras Markem-Imaje para as necessidades da sua produção.',
+  /** Variante local (mockup de 26/10/2026): marca acima do modelo, rótulo do card e faixa de ajuda. */
+  brand: 'Markem-Imaje',
+  itemCta: 'Ver equipamento',
+  help: {
+    text: 'Precisa de ajuda para escolher o equipamento ideal?',
+    cta: 'Fale com um especialista',
+  },
   groups: [
     {
       id: 'jato-de-tinta',
@@ -150,6 +157,9 @@ export const showcase = {
   eyebrow: string
   title: string
   text: string
+  brand: string
+  itemCta: string
+  help: { text: string; cta: string }
   groups: readonly ShowcaseGroup[]
   items: readonly ShowcaseItem[]
 }
