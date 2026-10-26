@@ -48,6 +48,11 @@
     scroll-behavior: smooth;
   }
 
+  /* Âncoras (o "Conheça os equipamentos" do hero) param abaixo do header fixo. */
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
+
   body {
     @apply bg-neutral-light font-sans text-ink antialiased;
   }

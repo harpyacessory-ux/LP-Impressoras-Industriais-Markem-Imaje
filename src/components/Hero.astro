@@ -1,17 +1,18 @@
 ---
 /**
  * ESTRUTURA FIXA (PROMPT-PADRAO-LP 4.1.2), com o desvio visual do mockup de abertura da
- * Print Master (26/10/2026 — docs/BRIEFING.md): fundo verde-escuro, H1 com a marca em menta,
- * pontos sem caixa, botões arredondados e o 9750 grande, com halo e arcos de luz.
+ * Print Master (26/10/2026 — docs/BRIEFING.md): fundo verde-escuro, H1 em três linhas com a
+ * marca em menta, pontos sem caixa, um botão em pílula e um link para a vitrine, o 9410 e o
+ * 9750 lado a lado sob o selo da Markem-Imaje, e a prévia do chat na coluna do shortcode.
  *
- * Grid desktop: texto (--text-col) · janela do equipamento (1fr) · shortcode do chat (300px).
- * O equipamento está no centro do banner (50% da largura), e esse centro é ancorado no centro
- * da coluna 2, em qualquer largura de tela. No mobile o banner vira um quadro sob o texto.
+ * Grid desktop: texto (--text-col) · janela dos equipamentos (1fr) · shortcode do chat (300px).
+ * O par de equipamentos está no centro do banner (50% da largura), e esse centro é ancorado no
+ * centro da coluna 2, em qualquer largura de tela. No mobile o banner vira um quadro sob o texto.
  * Abra a página com `?grid=1` para ver as colunas.
  */
-import { Picture } from 'astro:assets'
+import { Image, Picture } from 'astro:assets'
 import Icon from './Icon.astro'
-import { hero, cta } from '../data/content'
+import { hero, cta, chatPreview } from '../data/content'
 
 const isDev = import.meta.env.DEV
 
@@ -26,31 +27,34 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
   data-hero
 >
   {/* conteúdo — sem `relative` no contêiner: no desktop o banner se posiciona pelo hero */}
-  <div class="mx-auto max-w-page px-6 pt-12 pb-14 lg:px-10 lg:py-20">
+  <div class="mx-auto max-w-page px-6 pt-12 pb-14 lg:px-10 lg:py-16">
     <div class="hero-grid grid items-center gap-y-10 lg:gap-x-8">
       {/* Coluna 1 — textos */}
       <div class="relative z-[3] max-w-xl lg:max-w-none">
-        <span class="inline-flex items-center gap-3 font-sans text-[12.5px] font-semibold tracking-[0.22em] text-brand-glow uppercase">
-          <span aria-hidden="true" class="h-[2px] w-10 rounded-full bg-brand-glow"></span>
+        <span class="inline-flex items-center gap-3 font-sans text-[12px] font-medium tracking-[0.2em] text-brand-glow uppercase sm:text-[12.5px]">
+          <span aria-hidden="true" class="h-[3px] w-9 rounded-full bg-brand-glow"></span>
           {hero.eyebrow}
         </span>
 
-        <h1 class="mt-5 font-display text-[2.5rem] leading-[1.05] font-extrabold tracking-[-0.03em] text-neutral-light sm:text-[3.2rem] lg:text-[2.3rem] xl:text-[3.25rem]">
+        <h1 class="mt-5 font-display text-[2.75rem] leading-[0.98] font-extrabold tracking-[-0.04em] text-neutral-light sm:text-[3.6rem] lg:text-[3rem] xl:text-[4rem]">
           {titleBefore}
           {at >= 0 && <span class="block text-brand-glow">{hero.highlight}</span>}
           {titleAfter}
         </h1>
 
-        <p class="mt-6 max-w-[34rem] font-sans text-[17px] leading-relaxed text-neutral-light/75 lg:text-lg">
+        <p class="mt-6 max-w-[30rem] font-sans text-[17px] leading-relaxed text-neutral-light/80 lg:text-lg">
           {hero.text}
         </p>
 
         {/* 3 pontos — ícone menta solto e texto sempre em duas linhas */}
-        <ul class="mt-9 flex flex-wrap gap-x-6 gap-y-5" aria-label="Destaques">
+        <ul
+          class="mt-8 grid grid-cols-3 gap-x-3 sm:flex sm:flex-nowrap lg:grid xl:flex"
+          aria-label="Destaques"
+        >
           {hero.points.map((point) => (
-            <li class="hero-point flex items-center gap-3">
-              <Icon name={point.icon} class="size-9 shrink-0 text-brand-glow" />
-              <span class="font-sans text-[15px] leading-snug text-neutral-light/90">
+            <li class="hero-point flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-2.5 lg:flex-col lg:items-start lg:gap-2 xl:flex-row xl:items-center xl:gap-2.5">
+              <Icon name={point.icon} class="size-8 shrink-0 text-brand-glow" />
+              <span class="font-sans text-[13.5px] leading-snug text-neutral-light/90">
                 <span class="block whitespace-nowrap">{point.line1}</span>
                 <span class="block whitespace-nowrap">{point.line2}</span>
               </span>
@@ -58,28 +62,43 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
           ))}
         </ul>
 
-        <div class="mt-9 flex flex-wrap items-center gap-4">
-          <button
-            type="button"
-            data-cta="hero-primary"
-            class="btn-slave-whats inline-flex items-center justify-center gap-3 rounded-lg bg-brand-emerald px-6 py-4 font-sans text-base font-semibold text-neutral-light shadow-[0_18px_40px_-18px_rgba(7,134,90,0.95)] transition-colors duration-200 hover:bg-accent-orange lg:text-[15px] xl:text-base"
-          >
-            {cta.primary}
-            <Icon name="arrow-right" class="size-5 shrink-0" />
-          </button>
-          <button
-            type="button"
-            data-cta="hero-secondary"
-            class="btn-slave-whats inline-flex items-center justify-center gap-3 rounded-lg border border-neutral-light/45 px-6 py-4 font-sans text-base font-medium text-neutral-light transition-colors duration-200 hover:bg-neutral-light/10 lg:text-[15px] xl:text-base"
-          >
-            <Icon name="search" class="size-5 shrink-0" />
-            {cta.secondary}
-          </button>
-        </div>
+        <button
+          type="button"
+          data-cta="hero-primary"
+          class="btn-slave-whats mt-9 inline-flex items-center justify-center gap-3 rounded-full bg-brand-emerald bg-[linear-gradient(180deg,#0a8f61_0%,#06784f_100%)] px-8 py-4 font-sans text-[17px] font-bold text-neutral-light shadow-[0_18px_44px_-16px_rgba(26,165,122,0.85)] ring-1 ring-brand-glow/30 transition-[filter] duration-200 ring-inset hover:brightness-110"
+        >
+          {cta.primary}
+          <Icon name="whatsapp" class="size-6 shrink-0" />
+          <Icon name="arrow-right" class="size-5 shrink-0" />
+        </button>
+
+        <a
+          href="#vitrine"
+          data-cta="hero-secondary"
+          class="group mt-7 flex w-fit items-center gap-3 border-b border-neutral-light/45 pb-1.5 font-sans text-base text-neutral-light/90 transition-colors duration-200 hover:border-brand-glow hover:text-brand-glow"
+        >
+          {hero.link}
+          <Icon
+            name="arrow-right"
+            class="size-5 transition-transform duration-200 group-hover:translate-x-0.5"
+          />
+        </a>
       </div>
 
-      {/* Coluna 2 — janela do equipamento (no mobile, o quadro do banner) */}
+      {/* Coluna 2 — janela dos equipamentos (no mobile, o quadro do banner) */}
       <div class="hero-window">
+        <div class="hero-badge">
+          <Image
+            src={hero.badge.src}
+            alt={hero.badge.alt}
+            width={220}
+            height={50}
+            format="webp"
+            loading="eager"
+            decoding="async"
+            class="h-8 w-auto sm:h-10"
+          />
+        </div>
         <div class="hero-photo">
           <Picture
             src={hero.banner.src}
@@ -95,7 +114,6 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
             pictureAttributes={{ class: 'block h-full' }}
           />
         </div>
-        <span class="hero-caption font-sans text-[13px] text-neutral-light/70">{hero.caption}</span>
       </div>
 
       {/* Coluna 3 — shortcode do chat (300px) */}
@@ -125,17 +143,58 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
           )}
         </slot>
       </div>
+      {/* Prévia do chat: só entra no lugar do shortcode cru, fora do WordPress (script abaixo). */}
+      <template>
+        <div class="overflow-hidden rounded-2xl border border-brand-glow/25 bg-neutral-light shadow-[0_30px_60px_-28px_rgba(0,0,0,0.75)]">
+          <div class="flex items-center gap-3 bg-primary-dark px-4 py-4">
+            <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-brand-leaf text-neutral-light">
+              <Icon name="whatsapp" class="size-6" />
+            </span>
+            <span class="min-w-0">
+              <span class="block font-display text-[15px] leading-tight font-bold text-neutral-light">
+                {chatPreview.title}
+              </span>
+              <span class="mt-0.5 block font-sans text-[12.5px] text-brand-glow">
+                {chatPreview.subtitle}
+              </span>
+            </span>
+          </div>
+          <div class="bg-[#f3f7f5] p-4">
+            <p class="max-w-[90%] rounded-2xl rounded-tl-sm bg-neutral-light px-4 py-3 font-sans text-[13.5px] leading-snug text-ink shadow-[0_6px_16px_-10px_rgba(6,67,55,0.35)]">
+              {chatPreview.greeting}
+            </p>
+            <p class="mt-4 font-sans text-[13px] font-medium text-ink">{chatPreview.prompt}</p>
+            <div class="mt-2.5 grid grid-cols-2 gap-2">
+              {chatPreview.options.map((option) => (
+                <button
+                  type="button"
+                  data-cta={`hero-chat-${option.id}`}
+                  class="btn-slave-whats flex items-center gap-2 rounded-lg border border-primary-dark/20 bg-neutral-light px-2.5 py-3 text-left font-sans text-[13px] text-ink transition-colors duration-200 hover:border-accent-orange hover:text-accent-orange"
+                >
+                  <Icon name={option.icon} class="size-5 shrink-0 text-primary-dark" />
+                  {option.label}
+                </button>
+              ))}
+            </div>
+            <p class="mt-3 font-sans text-[12px] text-ink-soft">{chatPreview.hint}</p>
+            <p class="mt-3 border-t border-ink/10 pt-3 font-sans text-[11px] text-ink-soft">
+              {chatPreview.privacy}
+            </p>
+          </div>
+        </div>
+      </template>
       {/*
         Fora do WordPress o shortcode chega como texto cru ("[atendimento_chat …]"). Este script
-        roda durante o parse, antes da primeira pintura, e esconde o espaço — sem deslocar nada.
-        No WordPress o plugin já trocou o shortcode pelo chat e o script não faz nada.
+        roda durante o parse, antes da primeira pintura, e troca o texto pela prévia do chat — sem
+        deslocar nada. No WordPress o plugin já trocou o shortcode e o script não faz nada.
       */}
       <script is:inline>
         ;(() => {
-          const slot = document.currentScript?.previousElementSibling
-          if (!slot || /wordpress|printmaster\.net\.br/i.test(location.hostname)) return
+          const preview = document.currentScript?.previousElementSibling
+          const slot = preview?.previousElementSibling
+          if (!slot || !preview || /wordpress|printmaster\.net\.br/i.test(location.hostname)) return
           if (slot.children.length === 0 && /^\[[^\]]+\]$/.test(slot.textContent.trim()))
-            slot.hidden = true
+            slot.replaceChildren(preview.content.cloneNode(true))
         })()
       </script>
     </div>
@@ -152,7 +211,7 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
         </div>
         <div class="hidden border-x-2 border-dashed border-brand-glow bg-brand-glow/5 lg:block">
           <span class="m-2 inline-block bg-black/60 px-2 font-mono text-[11px] text-brand-glow">
-            col 2 · janela do equipamento
+            col 2 · janela dos equipamentos
           </span>
         </div>
         <div class="hidden border-x border-dashed border-white/60 lg:block">
@@ -168,7 +227,7 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
 <style>
   /* Medidas que amarram as colunas e o banner ao mesmo eixo. */
   .hero {
-    --text-col: 420px;
+    --text-col: 400px;
     --chat-col: 300px;
     --col-gap: 2rem;
     --page-half: calc(var(--container-page) / 2);
@@ -179,23 +238,31 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
       var(--page-edge) + 40px + var(--text-col) + var(--col-gap) +
         (var(--inner) - var(--text-col) - var(--chat-col) - 2 * var(--col-gap)) / 2
     );
-    /* Deslocamento do equipamento a partir do centro da janela (só na faixa estreita). */
+    /* Deslocamento do par de equipamentos e fração da altura do hero que o banner ocupa. */
     --photo-shift: 0px;
+    --photo-scale: 1;
   }
 
-  /* Divisórias sutis entre os destaques (a partir de tablet). */
-  /* Fora de 1024–1279px os três cabem numa linha; nessa faixa a coluna é estreita e o terceiro
-     desce, então ali não há divisória. */
-  @media (width >= 40rem) and (width < 64rem), (width >= 80rem) {
-    .hero-point + .hero-point {
-      padding-left: 1.5rem;
-      border-left: 1px solid rgb(255 255 255 / 0.16);
-    }
+  /* Divisórias sutis entre os destaques. */
+  .hero-point + .hero-point {
+    padding-left: 0.75rem;
+    border-left: 1px solid rgb(255 255 255 / 0.16);
   }
 
-  /* Mobile: o banner é um quadro sob o texto, centrado no equipamento. */
+  /* Mobile: o selo e o banner formam um quadro sob o texto, centrado nos equipamentos. */
   .hero-window {
     position: relative;
+  }
+
+  .hero-badge {
+    position: relative;
+    z-index: 3;
+    width: fit-content;
+    margin: 0 auto -2.5rem;
+    padding: 0.6rem 1.1rem;
+    border-radius: 0.75rem;
+    background: var(--color-neutral-light);
+    box-shadow: 0 20px 40px -22px rgb(0 0 0 / 0.75);
   }
 
   .hero-photo {
@@ -216,21 +283,14 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
     object-position: 50% 62%;
   }
 
-  .hero-caption {
-    position: absolute;
-    right: 1rem;
-    bottom: 1.25rem;
-    z-index: 3;
-  }
-
   @media (min-width: 1024px) {
-    /* Col 1 texto | Col 2 janela do equipamento | Col 3 shortcode 300px */
+    /* Col 1 texto | Col 2 janela dos equipamentos | Col 3 shortcode 300px */
     .hero-grid {
       grid-template-columns: minmax(0, var(--text-col)) minmax(0, 1fr) var(--chat-col);
     }
 
     .hero {
-      min-height: 640px;
+      min-height: 680px;
     }
 
     .hero-window {
@@ -238,17 +298,23 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
       align-self: stretch;
     }
 
-    /* O banner cobre a altura do hero; o equipamento cai no centro da coluna 2. */
+    /* Banner na altura do hero (ou --photo-scale dela, pela base); par no centro da coluna 2. */
     .hero-photo {
       position: absolute;
-      inset-block: 0;
+      top: auto;
+      bottom: 0;
+      height: calc(var(--photo-scale) * 100%);
       left: calc(var(--window-center) + var(--photo-shift));
       z-index: 1;
       max-width: none;
       margin: 0;
       aspect-ratio: auto;
       transform: translateX(-50%);
-      mask-image: linear-gradient(to right, transparent 0, black 16%, black 84%, transparent 100%);
+      /* Esmaece as laterais e o topo: com o banner encolhido, a borda de cima não vira linha. */
+      mask-image:
+        linear-gradient(to right, transparent 0, black 16%, black 84%, transparent 100%),
+        linear-gradient(to bottom, transparent 0, black 18%);
+      mask-composite: intersect;
     }
 
     .hero-photo :global(.hero-photo-img) {
@@ -257,27 +323,30 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
       height: 100%;
     }
 
-    .hero-caption {
-      right: auto;
-      bottom: 3.5rem;
-      left: calc(var(--window-center) + var(--photo-shift) + 185px);
+    /* O selo fica acima dos equipamentos, que começam a ~45% da altura do banner. */
+    .hero-badge {
+      position: absolute;
+      top: calc(100% - var(--photo-scale) * 74%);
+      left: calc(var(--window-center) + var(--photo-shift));
+      margin: 0;
+      transform: translateX(-50%);
     }
   }
 
-  /* 1024–1279px: a janela é estreita; o equipamento desliza para a direita, para não passar
-     por trás do texto. */
+  /* 1024–1279px: a janela é estreita; o banner encolhe pela base e o par de equipamentos
+     desliza para a direita, para não passar por trás do texto. */
   @media (min-width: 1024px) and (max-width: 1279px) {
     .hero {
-      --photo-shift: 70px;
+      --photo-shift: 60px;
+      --photo-scale: 0.78;
     }
   }
 
   @media (min-width: 1280px) {
     .hero {
-      /* Cabe "Impressoras industriais" numa linha do H1, como no mockup. */
-      --text-col: 600px;
-      --photo-shift: 20px;
-      min-height: 680px;
+      /* Cabe "Markem-Imaje" numa linha do H1 em 4rem, como no mockup. */
+      --text-col: 440px;
+      min-height: 760px;
     }
   }
 </style>

@@ -13,6 +13,7 @@ import type { Photo } from './types'
 import { site } from './site'
 
 import heroBg from '@assets/heroBg.png'
+import heroMarca from '@assets/heroMarca.png'
 
 /* ------------------------------------------------------------------ tipos */
 
@@ -48,19 +49,22 @@ export const header = {
 /* -------------------------------------------------------------------- hero */
 
 export const hero = {
-  eyebrow: 'Codificação industrial',
+  /** Selo de distribuidor: decisão do usuário no mockup de abertura (26/10/2026). */
+  eyebrow: 'Print Master | Distribuidor autorizado',
   title: site.product,
-  /** Trecho do H1 que vai para a segunda linha, em menta (mockup de 26/10/2026). */
+  /** Trecho do H1 que vai para a última linha, em menta (mockup de 26/10/2026). */
   highlight: 'Markem-Imaje',
   text: 'Codificação e rastreabilidade com precisão para sua linha de produção, com o suporte especializado da Print Master.',
   banner: {
     src: heroBg,
-    alt: 'Impressora jato de tinta Markem-Imaje 9750 em destaque sobre fundo verde-escuro',
+    alt: 'Impressoras jato de tinta Markem-Imaje 9410 e 9750 lado a lado sobre fundo verde-escuro',
   },
-  /** Legenda do equipamento do banner. */
-  caption: 'Markem-Imaje 9750',
+  /** Selo branco com o logo da marca, acima dos equipamentos. */
+  badge: { src: heroMarca, alt: 'Markem-Imaje' },
+  /** Link que leva à vitrine, no lugar do segundo botão (mockup de 26/10/2026). */
+  link: 'Conheça os equipamentos',
   points: [
-    { icon: 'barcode', line1: 'Codificação e', line2: 'rastreabilidade' },
+    { icon: 'barcode', line1: 'Precisão na', line2: 'codificação' },
     { icon: 'gear', line1: 'Alta', line2: 'performance' },
     { icon: 'users', line1: 'Suporte', line2: 'especializado' },
   ],
@@ -70,8 +74,37 @@ export const hero = {
   highlight: string
   text: string
   banner: Photo
-  caption: string
+  badge: Photo
+  link: string
   points: readonly [HeroPoint, HeroPoint, HeroPoint]
+}
+
+/**
+ * Prévia do chat do hero, só fora do WordPress: no lugar do texto cru do shortcode, a página
+ * mostra como o widget de atendimento aparece (mockup de 26/10/2026). No WordPress o plugin
+ * troca o shortcode pelo chat de verdade e esta prévia não é usada.
+ */
+export const chatPreview = {
+  title: 'Atendimento Print Master',
+  subtitle: 'Vamos encontrar a solução ideal',
+  greeting: 'Olá! Como podemos ajudar sua empresa?',
+  prompt: 'Selecione o que você precisa:',
+  options: [
+    { id: 'codificadoras', icon: 'barcode', label: 'Codificadoras' },
+    { id: 'consumiveis', icon: 'box', label: 'Consumíveis' },
+    { id: 'pecas', icon: 'gear', label: 'Peças' },
+    { id: 'manutencao', icon: 'wrench', label: 'Manutenção' },
+  ],
+  hint: 'Escolha uma opção para continuar.',
+  privacy: 'Ao continuar, você aceita nossa política de privacidade.',
+} as const satisfies {
+  title: string
+  subtitle: string
+  greeting: string
+  prompt: string
+  options: readonly { id: string; icon: IconName; label: string }[]
+  hint: string
+  privacy: string
 }
 
 /* ----------------------------------------------------------------- cotação */

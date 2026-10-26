@@ -64,7 +64,7 @@ publico: [Produção, Engenharia, Qualidade, Compras]
 marcas:
   usarLogos: false
   nomes: [Markem-Imaje]
-  autorizacao: logo da Markem-Imaje sem autorização de uso registrada — a página cita a marca só por extenso
+  autorizacao: logo da Markem-Imaje no selo do hero e "Distribuidor autorizado" no eyebrow — decisão do usuário no mockup de abertura de 26/10/2026, o mesmo uso da página atual do cliente
 
 tokens:
   padrao: false
@@ -78,14 +78,14 @@ conteudo:
   title: Impressoras industriais Markem-Imaje para codificação | Print Master
   description: 'Impressoras industriais Markem-Imaje para codificação e rastreabilidade: jato de tinta, transferência térmica e Print & Apply, com suporte especializado.'
   hero:
-    eyebrow: Codificação industrial
+    eyebrow: 'Print Master | Distribuidor autorizado'
     title: Impressoras industriais Markem-Imaje
     # texto e pontos do mockup de abertura aprovado em 26/10/2026
     text: Codificação e rastreabilidade com precisão para sua linha de produção, com o suporte especializado da Print Master.
     points:
       - icon: barcode
-        line1: Codificação e
-        line2: rastreabilidade
+        line1: Precisão na
+        line2: codificação
       - icon: gear
         line1: Alta
         line2: performance
@@ -301,7 +301,6 @@ conflitos: []
 naoAplicado:
   - locação de impressoras Ricoh e outsourcing de impressão (outra oferta, já atendida pela LP de locação)
   - termo "hot stamping", pausado na lista de palavras-chave
-  - selo "Distribuidor autorizado" da página atual (autorização da Markem-Imaje não registrada no briefing)
   - '"Desde 2003" (sem fonte e aprovação para virar prova institucional nesta LP)'
   - CNPJ (dado legal, sem bloco previsto no footer padrão)
   - aplicações excedentes (vidro, filmes flexíveis, garrafas plásticas, latas e tampas, peças de metal e plástico, plásticos extrudados, tampas) — citadas no texto da seção
@@ -317,7 +316,7 @@ LP de produto para a campanha de impressoras industriais da Print Master, com a 
 
 A oferta abre em `vitrine`, com os 12 modelos da página atual em três prateleiras por tecnologia: jato de tinta contínuo (9018, 9450, 9750, 9410, 9330), transferência térmica (SmartDate OEM Connect, X30, X45, X65) e Print & Apply (2200, 2200 Pallet, Cimpak). Sem descrição por modelo — o material não tem, e a vitrine é tudo ou nada. Os modelos 9450 e SmartDate X45, comprados por nome na campanha, aparecem na vitrine. O apoio mostra o caminho do atendimento em `processo`. A prova usa as quatro aplicações priorizadas pelo briefing em `aplicacoes`, e o texto da seção cita os demais materiais (metal, garrafas, latas, vidro, ovos). A autoridade fecha com a frase de autoridade "Precisão para sua linha de produção" e os cinco diferenciais do briefing.
 
-A Markem-Imaje aparece **só por extenso**: o logo de terceiro não tem autorização registrada. O selo "Distribuidor autorizado" da página atual ficou de fora pelo mesmo motivo.
+O logo da Markem-Imaje (selo branco do hero) e o eyebrow "Print Master | Distribuidor autorizado" entraram por decisão do usuário no mockup de abertura de 26/10/2026, o mesmo uso da página atual do cliente. No resto da página a marca aparece por extenso.
 
 As cores são os verdes da marca já aprovados pelo cliente na LP de locação (26/10/2026); a estrutura fixa segue o padrão.
 
@@ -362,23 +361,23 @@ As imagens são as da página atual do cliente, nos slots posicionais do padrão
 
 ## Pendências
 
-| O que falta                                     | Quem resolve        | Especificação                                                                                               |
-| ----------------------------------------------- | ------------------- | ----------------------------------------------------------------------------------------------------------- |
-| Banner do hero                                  | designer            | 1981×900, fundo escuro, equipamento na faixa de 62–79% da largura; hoje é uma montagem com o 9750 recortado |
-| Fotos das aplicações em alta                    | cliente ou banco    | as do site têm 165 a 235 px de altura; pedir 1200×900                                                       |
-| Pessoa da equipe recortada                      | cliente ou designer | 1220×1000 com fundo transparente; hoje entram três equipamentos recortados do site                          |
-| Cenário de diferenciais                         | cliente ou banco    | 1600×900; hoje é a foto de garrafa de vidro da página atual                                                 |
-| Área comercial atendida                         | cliente             | habilita selo de área na cotação                                                                            |
-| Validar a sequência de `processo`               | cliente             | inferida (diagnóstico, tecnologia, instalação, suporte); sem prazos                                         |
-| Público (cargos que decidem)                    | cliente             | inferido: Produção, Engenharia, Qualidade, Compras                                                          |
-| Uso do logo Markem-Imaje e do selo "autorizado" | cliente             | autorização por escrito da Markem-Imaje                                                                     |
-| Descrição de cada modelo                        | cliente             | 1 frase de 50–90 caracteres para todos os 12 (ou nenhum)                                                    |
-| Modelos laser                                   | cliente             | a palavra-chave "impressão a laser" não tem modelo na página                                                |
-| Especificações comparáveis                      | cliente             | habilitaria `especificacoes` (tabela técnica)                                                               |
-| Os 6 dados para cotar um equipamento            | comercial           | habilitaria `identificar` no apoio                                                                          |
-| Lista de dúvidas reais                          | comercial           | habilitaria `perguntas` na autoridade                                                                       |
-| WhatsApp comercial                              | cliente             | número com DDD; liga o botão flutuante                                                                      |
-| Política de privacidade                         | cliente             | link para a nota de LGPD                                                                                    |
+| O que falta                          | Quem resolve        | Especificação                                                                                                  |
+| ------------------------------------ | ------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Banner do hero                       | designer            | 1981×900, fundo escuro, equipamento na faixa de 62–79% da largura; hoje é uma montagem com o 9750 recortado    |
+| Fotos das aplicações em alta         | cliente ou banco    | as do site têm 165 a 235 px de altura; pedir 1200×900                                                          |
+| Pessoa da equipe recortada           | cliente ou designer | 1220×1000 com fundo transparente; hoje entram três equipamentos recortados do site                             |
+| Cenário de diferenciais              | cliente ou banco    | 1600×900; hoje é a foto de garrafa de vidro da página atual                                                    |
+| Área comercial atendida              | cliente             | habilita selo de área na cotação                                                                               |
+| Validar a sequência de `processo`    | cliente             | inferida (diagnóstico, tecnologia, instalação, suporte); sem prazos                                            |
+| Público (cargos que decidem)         | cliente             | inferido: Produção, Engenharia, Qualidade, Compras                                                             |
+| Registro da autorização Markem-Imaje | cliente             | logo e "distribuidor autorizado" já estão na página por decisão do usuário; arquivar a autorização por escrito |
+| Descrição de cada modelo             | cliente             | 1 frase de 50–90 caracteres para todos os 12 (ou nenhum)                                                       |
+| Modelos laser                        | cliente             | a palavra-chave "impressão a laser" não tem modelo na página                                                   |
+| Especificações comparáveis           | cliente             | habilitaria `especificacoes` (tabela técnica)                                                                  |
+| Os 6 dados para cotar um equipamento | comercial           | habilitaria `identificar` no apoio                                                                             |
+| Lista de dúvidas reais               | comercial           | habilitaria `perguntas` na autoridade                                                                          |
+| WhatsApp comercial                   | cliente             | número com DDD; liga o botão flutuante                                                                         |
+| Política de privacidade              | cliente             | link para a nota de LGPD                                                                                       |
 
 ## Conflitos com o padrão
 
@@ -386,4 +385,4 @@ Nenhum.
 
 ## Dados não usados pelo padrão
 
-Locação de impressoras Ricoh e outsourcing de impressão (outra oferta); termo "hot stamping" (pausado); selo "Distribuidor autorizado"; "Desde 2003"; CNPJ; aplicações excedentes (citadas no texto de `aplicacoes`); "Print Master 2026 | Todos direitos reservados" (o footer gera o ano).
+Locação de impressoras Ricoh e outsourcing de impressão (outra oferta); termo "hot stamping" (pausado); "Desde 2003"; CNPJ; aplicações excedentes (citadas no texto de `aplicacoes`); "Print Master 2026 | Todos direitos reservados" (o footer gera o ano).
