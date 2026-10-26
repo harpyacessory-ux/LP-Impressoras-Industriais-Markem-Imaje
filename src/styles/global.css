@@ -1,0 +1,140 @@
+@import 'tailwindcss';
+/* Manrope servida pelo próprio site (com preload no Layout): sem a troca tardia de fonte do
+   Google Fonts, que deslocava o hero e estourava o CLS no Lighthouse CI. */
+@import '@fontsource-variable/manrope/wght.css';
+
+/* ---------------------------------------------------------------------------
+   Tokens do padrão B2 (PROMPT-PADRAO-LP, item 2).
+   Só altere os valores se a entrevista (entrada 21) trouxer cores/fonte do cliente.
+
+   Print Master (26/10/2026): verdes da marca, os mesmos aprovados pelo cliente na LP de
+   locação (docs/FICHA-LP.md, entrada 14). Os nomes dos tokens ficam os do padrão —
+   "navy" é o verde profundo e "orange" é o verde de ação.
+   --------------------------------------------------------------------------- */
+@theme {
+  --color-primary-dark: #064337;
+  --color-primary-dark-800: #0a5a49;
+  --color-primary-dark-900: #032c24;
+  --color-accent-orange: #027653;
+  --color-accent-orange-dark: #025f43;
+  --color-brand-mint: #61e5a9;
+  --color-neutral-light: #ffffff;
+  --color-neutral-gray-100: #f2f8f6;
+  --color-neutral-gray-200: #a0a0a0;
+  --color-ink: #10201b;
+  /* Um tom abaixo do da LP de locação: a nota de LGPD (ink-soft/80 sobre o cinza) ficava em 4,1:1. */
+  --color-ink-soft: #3f504a;
+
+  --container-page: 1320px;
+
+  /* Uma única família para títulos e corpo; o peso e o tracking fazem a hierarquia.
+     Reserva com métricas de Arial: uma reserva larga (DejaVu, no Linux) quebrava o H1 em
+     mais linhas até a fonte chegar e deslocava o hero. */
+  --font-display:
+    'Manrope Variable', 'Manrope', Arial, Helvetica, 'Liberation Sans', ui-sans-serif, sans-serif;
+  --font-sans:
+    'Manrope Variable', 'Manrope', Arial, Helvetica, 'Liberation Sans', ui-sans-serif, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-neutral-light font-sans text-ink antialiased;
+  }
+
+  .font-display {
+    letter-spacing: -0.015em;
+  }
+
+  ::selection {
+    @apply bg-accent-orange text-neutral-light;
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--color-accent-orange);
+    outline-offset: 2px;
+  }
+}
+
+/* Fundo navy com brilho radial: hero, painéis, bloco de diferenciais e footer. */
+@utility navy-premium {
+  background-color: var(--color-primary-dark);
+  background-image:
+    radial-gradient(1200px 520px at 16% -10%, rgb(255 255 255 / 0.08) 0%, transparent 55%),
+    linear-gradient(
+      165deg,
+      var(--color-primary-dark-800) 0%,
+      var(--color-primary-dark) 50%,
+      var(--color-primary-dark-900) 100%
+    );
+}
+
+/* Malha de blueprint esmaecida nas bordas, usada sobre navy. */
+@utility blueprint-grid {
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: radial-gradient(ellipse at 20% 0%, black 0%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse at 20% 0%, black 0%, transparent 78%);
+}
+
+/* Cantos técnicos laranja (18px) em painéis navy. */
+@utility tech-corners {
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-color: var(--color-accent-orange);
+    border-style: solid;
+    border-width: 0;
+    opacity: 0.9;
+    pointer-events: none;
+  }
+
+  &::before {
+    top: 14px;
+    left: 14px;
+    border-top-width: 2px;
+    border-left-width: 2px;
+  }
+
+  &::after {
+    right: 14px;
+    bottom: 14px;
+    border-bottom-width: 2px;
+    border-right-width: 2px;
+  }
+}
+
+/* Badge de vidro com brilho interno laranja. */
+@utility glass-badge {
+  background-image: linear-gradient(
+    160deg,
+    rgb(255 255 255 / 0.16) 0%,
+    rgb(255 255 255 / 0.04) 100%
+  );
+  border: 1px solid rgb(255 255 255 / 0.16);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.22),
+    inset 0 -10px 14px -10px rgb(97 229 169 / 0.45),
+    0 12px 22px -14px rgb(0 0 0 / 0.85);
+}
+
+/* Trilho horizontal sem barra de rolagem aparente (listas no mobile). */
+@utility scroll-track {
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
