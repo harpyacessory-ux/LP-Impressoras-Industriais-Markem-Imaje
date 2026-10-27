@@ -2,13 +2,14 @@
 /**
  * Galeria de aplicações — fase "prova" da biblioteca B2.
  *
- * Cabeçalho centrado e 4 cards-botão com foto 4:3. O card inteiro é o CTA, por
- * isso o `<button>` envolve a foto e o texto.
+ * VARIANTE LOCAL — Print Master, mockup de 27/10/2026 (docs/BRIEFING.md): cabeçalho centrado
+ * com o H2 em duas linhas, 4 cards com foto 8:5 em cima e corpo verde-escuro (título, frase e
+ * seta), e uma faixa "Encontre a solução ideal…" com CTA no fim. O card inteiro é o CTA.
+ * `npm run compose` sobrescreve este arquivo com o da biblioteca: ao recompor, reaplique a variante.
  */
 import { Image } from 'astro:assets'
 import Section from '@components/Section.astro'
 import Icon from '@components/Icon.astro'
-import SectionHeader from '@components/SectionHeader.astro'
 import type { SectionProps } from '@lib/layout'
 import { applications } from '@data/sections/aplicacoes'
 
@@ -18,66 +19,84 @@ const { tone, rhythm } = Astro.props
 ---
 
 <Section id="aplicacoes" tone={tone} rhythm={rhythm}>
-  <SectionHeader
-    eyebrow={applications.eyebrow}
-    title={applications.title}
-    text={applications.text}
-    align="center"
-    width="4xl"
-  />
+  <div class="mx-auto max-w-4xl text-center">
+    <span class="inline-flex items-center gap-3.5 font-sans text-[12px] font-semibold tracking-[0.3em] text-ink-soft uppercase">
+      <span aria-hidden="true" class="h-1 w-10 rounded-full bg-accent-orange"></span>
+      {applications.eyebrow}
+    </span>
+    <h2 class="mt-4 font-display text-[2.1rem] leading-[1.05] font-extrabold tracking-[-0.03em] text-primary-dark sm:text-5xl lg:text-[3.6rem]">
+      {/* Duas linhas fixas a partir do tablet; no celular o título quebra sozinho. */}
+      {applications.titleLines.map((line) => (
+        <span class="sm:block">{line} </span>
+      ))}
+    </h2>
+    <p class="mt-4 font-sans text-[15px] leading-relaxed text-ink-soft sm:text-[17px] lg:text-lg">
+      {applications.text}
+    </p>
+  </div>
 
-  <ul class="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
-    {applications.items.map((app, i) => (
+  <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+    {applications.items.map((app) => (
       <li>
         <button
           type="button"
           data-cta={`aplicacoes-${app.id}`}
-          class="btn-slave-whats app-card group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-neutral-gray-200/70 bg-neutral-light text-left shadow-[0_1px_2px_rgba(13,29,48,0.05)] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1.5 hover:border-accent-orange/50 hover:shadow-[0_28px_56px_-28px_rgba(0,33,71,0.35)]"
+          class="btn-slave-whats app-card group flex h-full w-full flex-col overflow-hidden rounded-2xl bg-primary-dark text-left shadow-[0_22px_44px_-28px_rgba(1,36,34,0.65)] transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_32px_60px_-30px_rgba(1,36,34,0.75)]"
         >
-          <span
-            aria-hidden="true"
-            class="absolute inset-x-0 top-0 z-10 h-[3px] origin-left scale-x-0 bg-accent-orange transition-transform duration-300 ease-out group-hover:scale-x-100"
-          />
-
-          <div class="relative aspect-[4/3] overflow-hidden bg-neutral-gray-100">
+          <span class="block aspect-[8/5] overflow-hidden bg-primary-dark-900">
             <Image
               src={app.photo.src}
               alt={app.photo.alt}
               format="webp"
-              width={640}
+              widths={[400]}
+              sizes="(min-width: 1024px) 300px, (min-width: 640px) 50vw, 100vw"
               loading="lazy"
               decoding="async"
-              class="h-full w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.06]"
+              class="h-full w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.05]"
             />
-            <span
-              aria-hidden="true"
-              class="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-primary-dark-900/55 to-transparent"
-            />
-            <span class="absolute bottom-3 left-4 z-[2] font-display text-[11px] font-extrabold tracking-[0.2em] text-neutral-light/85">
-              {String(i + 1).padStart(2, '0')}
+          </span>
+          <span class="app-card__body flex flex-1 flex-col px-6 pt-5 pb-6">
+            <span class="font-display text-xl leading-snug font-bold text-neutral-light lg:text-[1.35rem]">
+              {app.label}
             </span>
-          </div>
-
-          <div class="flex flex-1 items-start justify-between gap-3 px-5 pt-4 pb-5">
-            <span class="flex min-w-0 flex-col gap-1.5">
-              <span class="font-display text-lg leading-snug font-extrabold text-ink">
-                {app.label}
-              </span>
-              <span class="font-sans text-[13px] leading-relaxed text-ink-soft">
+            <span class="mt-2.5 flex flex-1 items-center justify-between gap-3">
+              <span class="font-sans text-[14px] leading-relaxed text-neutral-light/85">
                 {app.description}
               </span>
+              <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-leaf text-neutral-light transition-transform duration-300 group-hover:translate-x-0.5">
+                <Icon name="arrow-right" class="size-5" />
+              </span>
             </span>
-            <span class="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-neutral-gray-100 text-primary-dark transition-[background-color,color,transform] duration-300 group-hover:translate-x-0.5 group-hover:bg-accent-orange group-hover:text-neutral-light">
-              <Icon name="arrow-right" class="size-3.5" />
-            </span>
-          </div>
+          </span>
         </button>
       </li>
     ))}
   </ul>
+
+  <div class="mt-12 flex flex-col gap-3 border-t border-ink/10 pt-7 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+    <p class="font-sans text-[16px] text-ink-soft sm:text-[17px]">{applications.help.text}</p>
+    <button
+      type="button"
+      data-cta="aplicacoes-cta"
+      class="btn-slave-whats group inline-flex shrink-0 items-center gap-3 self-start font-sans text-[16px] font-bold text-primary-dark transition-colors duration-200 hover:text-accent-orange sm:self-auto sm:text-[17px]"
+    >
+      {applications.help.cta}
+      <Icon
+        name="arrow-right"
+        class="size-5 transition-transform duration-200 group-hover:translate-x-0.5"
+      />
+    </button>
+  </div>
 </Section>
 
 <style>
+  /* Corpo verde-escuro do card, com um brilho sutil no topo. */
+  .app-card__body {
+    background:
+      radial-gradient(120% 90% at 0% 0%, rgb(255 255 255 / 0.06) 0%, transparent 60%),
+      linear-gradient(165deg, var(--color-primary-dark) 0%, var(--color-primary-dark-900) 100%);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .app-card,
     .app-card * {

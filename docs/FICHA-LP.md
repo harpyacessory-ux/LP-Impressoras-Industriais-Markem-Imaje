@@ -231,24 +231,25 @@ blocos:
     responde: [aplicacao-material]
     papeis: [Produção, Qualidade]
     eyebrow: Aplicações
-    title: Codificação para cada tipo de embalagem
-    text: 'Do papelão ao metal: codificação para alimentos, cabos, garrafas, latas, vidro, ovos e outras superfícies da sua produção.'
+    # variante local do mockup de 27/10/2026: H2 em duas linhas, cards verde-escuros e faixa de ajuda
+    title: Codificação para cada tipo de embalagem.
+    text: Soluções para identificar embalagens, produtos e diferentes superfícies da sua produção.
     items:
       - id: papel-cartao
         label: Papel cartão
-        description: Tintas de secagem rápida com resistência a manchas para impressão em papel cartão.
+        description: 'Codificação nítida em embalagens de papel cartão, com tintas de secagem rápida.'
         photo: Data de validade e lote impressos em embalagem de papel cartão
       - id: papelao
         label: Papelão ondulado
-        description: 'Econômico e conforme as normas: o código certo na caixa certa, sempre.'
+        description: 'Identificação de caixas com informações de lote, datas e rastreabilidade.'
         photo: Data de produção e lote impressos em caixa de papelão ondulado
       - id: cabos-fios
         label: Cabos e fios
-        description: Códigos permanentes e legíveis, mesmo nos ambientes de produção mais adversos.
+        description: Marcação legível para identificar cabos e fios ao longo da produção.
         photo: Marcação impressa na capa de cabos elétricos
       - id: alimentos
         label: Alimentos
-        description: Tintas 100% seguras e comestíveis, em conformidade com normas locais e nacionais.
+        description: Soluções de codificação para as necessidades da indústria de alimentos.
         photo: Queijos embalados com data e código de barras impressos
 
   segmentos:

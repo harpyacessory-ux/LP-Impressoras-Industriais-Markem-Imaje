@@ -151,7 +151,8 @@
       ],
       "exampleHash": "61d1254bd3fc3c58",
       "ctas": [
-        "aplicacoes-{item.id}"
+        "aplicacoes-{item.id}",
+        "aplicacoes-cta"
       ],
       "contract": {
         "itemsPath": "items",
@@ -172,12 +173,13 @@
         {
           "dir": "aplicacoes",
           "files": "4 fotos",
-          "spec": "JPG/PNG 1200×900 (4:3), equipamento em operação",
-          "width": 1200,
-          "height": 900,
+          "spec": "JPG 8:5, 640×400, aplicação ou material codificado (variante local)",
+          "width": 640,
+          "height": 400,
           "alpha": false
         }
-      ]
+      ],
+      "localVariant": "Print Master 27/10/2026 — mockup: H2 em duas linhas, cards com foto 8:5 e corpo verde-escuro, faixa \"Encontre a solução ideal\" com CTA (docs/BRIEFING.md)"
     },
     {
       "slug": "diferenciais",
