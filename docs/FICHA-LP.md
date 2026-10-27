@@ -266,8 +266,9 @@ blocos:
     papeis: [Engenharia, Compras]
     eyebrow: Por que a Print Master
     titleLines: [Precisão para, sua linha de produção]
-    text: Na Print Master, oferecemos as soluções de marcação e rastreabilidade Markem-Imaje, com codificação precisa e legível para alimentos, bebidas, farmacêuticos e eletrônicos.
-    scene: Garrafa de vidro com código impresso por jato de tinta
+    # variante local do mockup de 27/10/2026: cena única no bloco, sem pessoa recortada
+    text: Soluções de marcação e rastreabilidade Markem-Imaje, com codificação precisa e suporte especializado para sua indústria.
+    scene: Impressoras Markem-Imaje 9410, Cimpak e SmartDate X45 diante de uma linha de envase
     person: Impressoras Markem-Imaje de jato de tinta, transferência térmica e Print & Apply
     reasons:
       - icon: cpu
@@ -284,7 +285,7 @@ blocos:
         description: Menor consumo de energia e de materiais na operação.
       - icon: gear
         title: Codificação confiável
-        description: Equipamentos de alta performance para a sua produção.
+        description: Equipamentos de alta performance para sua linha de produção.
 
   perguntas:
     veredicto: insuficiente

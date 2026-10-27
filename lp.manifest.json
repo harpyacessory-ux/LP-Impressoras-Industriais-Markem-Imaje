@@ -222,21 +222,13 @@
           "dir": "diferenciais",
           "match": "cenario",
           "files": "cenario.jpg",
-          "spec": "Cenário/bancada 1600×900, sangra à direita do bloco navy",
-          "width": 1600,
-          "height": 900,
+          "spec": "Cena 1935×812 do bloco inteiro: fundo escuro à esquerda, equipamentos à direita (variante local)",
+          "width": 1935,
+          "height": 812,
           "alpha": false
-        },
-        {
-          "dir": "diferenciais",
-          "match": "pessoa",
-          "files": "pessoa.png",
-          "spec": "Pessoa recortada de corpo inteiro, 1220×1000, fundo transparente",
-          "width": 1220,
-          "height": 1000,
-          "alpha": true
         }
-      ]
+      ],
+      "localVariant": "Print Master 27/10/2026 — mockup: cena única no bloco inteiro (sem pessoa recortada), H2 maior com barra verde, botão arredondado e cards com ícone em caixa menta, sem corte de texto (docs/BRIEFING.md)"
     }
   ]
 }

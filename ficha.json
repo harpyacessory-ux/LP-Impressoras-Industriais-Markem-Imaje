@@ -1,6 +1,6 @@
 {
   "ficha": 1,
-  "gerado": "2026-10-27T13:23:21.799Z",
+  "gerado": "2026-10-27T13:41:41.526Z",
   "origem": "docs/FICHA-LP.md",
   "padrao": "2.8.0",
   "cliente": "Print Master",
@@ -326,8 +326,8 @@
       "conteudo": {
         "eyebrow": "Por que a Print Master",
         "titleLines": ["Precisão para", "sua linha de produção"],
-        "text": "Na Print Master, oferecemos as soluções de marcação e rastreabilidade Markem-Imaje, com codificação precisa e legível para alimentos, bebidas, farmacêuticos e eletrônicos.",
-        "scene": "Garrafa de vidro com código impresso por jato de tinta",
+        "text": "Soluções de marcação e rastreabilidade Markem-Imaje, com codificação precisa e suporte especializado para sua indústria.",
+        "scene": "Impressoras Markem-Imaje 9410, Cimpak e SmartDate X45 diante de uma linha de envase",
         "person": "Impressoras Markem-Imaje de jato de tinta, transferência térmica e Print & Apply",
         "reasons": [
           {
@@ -353,7 +353,7 @@
           {
             "icon": "gear",
             "title": "Codificação confiável",
-            "description": "Equipamentos de alta performance para a sua produção."
+            "description": "Equipamentos de alta performance para sua linha de produção."
           }
         ]
       }
