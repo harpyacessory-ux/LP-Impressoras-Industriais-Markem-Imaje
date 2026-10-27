@@ -50,6 +50,12 @@
     scroll-behavior: smooth;
   }
 
+  /* O Tailwind 4 deixa o cursor padrão nos botões: sem a mãozinha, o banner e os cards
+     clicáveis não parecem clicáveis. */
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
   /* Âncoras (o "Conheça os equipamentos" do hero) param abaixo do header fixo. */
   section[id] {
     scroll-margin-top: 5.5rem;
