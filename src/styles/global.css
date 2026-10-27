@@ -151,3 +151,59 @@
     display: none;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Divisões arredondadas entre seções — Print Master, pedido de 27/10/2026
+   (docs/BRIEFING.md). Onde o fundo muda, o bloco de cima termina com os cantos
+   arredondados e uma sombra suave sobre o de baixo, no lugar da linha reta.
+
+   Quando o fundo atrás dos cantos não é o da página, a seção vizinha se estende
+   por baixo com uma borda transparente do tamanho do raio (o fundo pinta por baixo
+   da borda) e uma margem negativa igual: o espaçamento visível não muda.
+   --------------------------------------------------------------------------- */
+:root {
+  --round: clamp(24px, 3vw, 44px);
+}
+
+/* Hero (verde) sobre os equipamentos (branco, o fundo da página). */
+[data-hero] {
+  z-index: 1;
+  border-radius: 0 0 var(--round) var(--round);
+  box-shadow: 0 30px 60px -30px rgb(1 36 34 / 0.55);
+}
+
+/* "Como funciona" (branco) sobre as aplicações (cinza). */
+#processo {
+  z-index: 1;
+  border-radius: 0 0 var(--round) var(--round);
+  box-shadow: 0 26px 50px -30px rgb(1 36 34 / 0.24);
+}
+
+#aplicacoes {
+  margin-top: calc(-1 * var(--round));
+  border-top: var(--round) solid transparent;
+}
+
+/* Bloco escuro de "Por que a Print Master": um cartão em largura total. */
+.why-hero {
+  border-radius: var(--round);
+  box-shadow: 0 30px 60px -34px rgb(1 36 34 / 0.6);
+}
+
+/* Cotação (verde) sobre o cinza dos diferenciais e sobre o rodapé. */
+#diferenciais {
+  margin-bottom: calc(-1 * var(--round));
+  border-bottom: var(--round) solid transparent;
+}
+
+#cotacao {
+  border-radius: var(--round);
+  box-shadow:
+    0 -24px 50px -30px rgb(1 36 34 / 0.45),
+    0 30px 60px -30px rgb(0 0 0 / 0.5);
+}
+
+body > footer {
+  margin-top: calc(-1 * var(--round));
+  border-top: var(--round) solid transparent;
+}
