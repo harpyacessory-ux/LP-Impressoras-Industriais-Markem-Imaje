@@ -84,7 +84,7 @@ const jsonLd = {
       Pular para o conteúdo
     </a>
     <slot />
-    <WhatsAppFloat number={whatsapp} />
+    {whatsapp && <WhatsAppFloat number={whatsapp} />}
 
     <script is:inline>
       // Parâmetros de depuração, usados pelos scripts de captura. Não fazem nada numa

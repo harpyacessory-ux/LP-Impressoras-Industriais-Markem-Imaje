@@ -9,6 +9,10 @@
  *
  * Seção que precisa de um bloco em largura total (bloco navy dos diferenciais,
  * por exemplo) passa `container={false}` e monta os próprios contêineres.
+ *
+ * Print Master (27/10/2026, docs/BRIEFING.md): os fundos claros ganham textura — manchas de
+ * luz verde em degradê, anéis menta finos e uma malha de pontos que esmaece —, numa camada
+ * atrás do conteúdo. A disposição muda por seção (`DECOR`); seção sem entrada fica lisa.
  */
 import { TONES, RHYTHMS } from '../lib/rhythm.mjs'
 import type { SectionProps } from '../lib/layout'
@@ -28,9 +32,57 @@ const rhythmClass = RHYTHMS[rhythm]?.class
 if (!toneClass) throw new Error(`Section "${id}": tom "${tone}" não existe em src/lib/rhythm.mjs`)
 if (!rhythmClass)
   throw new Error(`Section "${id}": ritmo "${rhythm}" não existe em src/lib/rhythm.mjs`)
+
+/** Posição de cada peça decorativa, por seção. */
+const DECOR: Record<string, { glowA: string; glowB: string; rings: string; dots: string }> = {
+  vitrine: {
+    glowA: '-top-48 -right-40 size-[44rem]',
+    glowB: 'top-[55%] -left-56 size-[34rem]',
+    rings: '-top-64 -right-64',
+    dots: 'top-0 left-0 [mask-image:radial-gradient(ellipse_at_top_left,black,transparent_70%)]',
+  },
+  processo: {
+    glowA: '-bottom-56 -left-48 size-[36rem]',
+    glowB: '-top-40 right-[10%] size-[26rem]',
+    rings: '-bottom-72 -right-60',
+    dots: 'right-0 bottom-0 [mask-image:radial-gradient(ellipse_at_bottom_right,black,transparent_70%)]',
+  },
+  aplicacoes: {
+    glowA: '-top-56 -left-48 size-[40rem]',
+    glowB: 'bottom-[-12rem] -right-40 size-[40rem]',
+    rings: '-top-64 -left-64',
+    dots: 'right-0 top-0 [mask-image:radial-gradient(ellipse_at_top_right,black,transparent_70%)]',
+  },
+}
+const decor = container ? DECOR[id] : undefined
 ---
 
-<section id={id} class:list={[toneClass, rhythmClass, className]} {...rest}>
+<section
+  id={id}
+  class:list={[toneClass, rhythmClass, decor && 'relative isolate overflow-hidden', className]}
+  {...rest}
+>
+  {decor && (
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+      <span class:list={['section-glow absolute rounded-full', decor.glowA]} />
+      <span class:list={['section-glow section-glow--mint absolute rounded-full', decor.glowB]} />
+      <svg
+        class:list={[
+          'absolute size-[30rem] text-brand-leaf/25 sm:size-[40rem] lg:size-[46rem]',
+          decor.rings,
+        ]}
+        viewBox="0 0 600 600"
+        fill="none"
+        stroke="currentColor"
+      >
+        <circle cx="300" cy="300" r="180" stroke-width="1.2" />
+        <circle cx="300" cy="300" r="225" stroke-width="1" />
+        <circle cx="300" cy="300" r="268" stroke-width="0.8" />
+        <circle cx="300" cy="300" r="298" stroke-width="0.6" stroke-dasharray="2 10" />
+      </svg>
+      <span class:list={['section-dots absolute h-80 w-[28rem] sm:w-[36rem]', decor.dots]} />
+    </div>
+  )}
   {container ? (
     <div class="mx-auto max-w-page px-6 lg:px-10">
       <slot />
@@ -39,3 +91,20 @@ if (!rhythmClass)
     <slot />
   )}
 </section>
+
+<style>
+  /* Mancha de luz verde, sem blur (o degradê radial já é suave e custa menos). */
+  .section-glow {
+    background: radial-gradient(circle, rgb(26 165 122 / 0.18) 0%, transparent 65%);
+  }
+
+  .section-glow--mint {
+    background: radial-gradient(circle, rgb(124 239 192 / 0.26) 0%, transparent 65%);
+  }
+
+  /* Malha de pontos verde-escura, bem leve. */
+  .section-dots {
+    background-image: radial-gradient(rgb(6 67 55 / 0.2) 1.2px, transparent 1.5px);
+    background-size: 22px 22px;
+  }
+</style>

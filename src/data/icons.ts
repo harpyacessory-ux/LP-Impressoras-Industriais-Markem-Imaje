@@ -93,8 +93,6 @@ export const iconPaths = {
   alert: '<path d="M12 4.3 21 19.7H3L12 4.3Z"/><path d="M12 10v3.8"/><path d="M12 16.8h.01"/>',
   'clipboard-check':
     '<rect x="5" y="4.5" width="14" height="16" rx="2"/><path d="M9 4.5V3.4c0-.5.4-.9.9-.9h4.2c.5 0 .9.4.9.9v1.1"/><path d="m9.2 12.6 2 2 3.6-4"/>',
-  // Cadeado da nota de privacidade da cotação (mockup de 27/10/2026).
-  lock: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><path d="M12 15.5v2"/>',
 } as const satisfies Record<string, string>
 
 export type IconName = keyof typeof iconPaths
