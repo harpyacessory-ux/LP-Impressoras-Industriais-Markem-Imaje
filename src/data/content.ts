@@ -110,9 +110,17 @@ export const chatPreview = {
 /* ----------------------------------------------------------------- cotação */
 
 export const quote = {
-  eyebrow: 'Solicite sua cotação',
+  /** Mockup da cotação (27/10/2026). */
+  eyebrow: 'Atendimento Print Master',
   title: 'Fale com quem entende de impressoras industriais.',
-  text: 'Nossa equipe ajuda a escolher o equipamento certo para a sua linha e a sua embalagem. Preencha o formulário ou fale direto conosco pelo WhatsApp.',
+  /** Trecho final do H2, em menta. */
+  highlight: 'industriais.',
+  text: 'Nossa equipe ajuda a escolher o equipamento certo para a sua linha e sua embalagem. Preencha o formulário ou fale diretamente conosco pelo WhatsApp.',
+  whatsappPrompt: 'Prefere conversar com a nossa equipe?',
+  whatsappLabel: 'Conversar no WhatsApp',
+  /** Cabeçalho do card do formulário (o formulário em si é o shortcode). */
+  formTitle: 'Solicite sua cotação',
+  formText: 'Conte o que sua empresa precisa. Vamos encontrar a solução ideal.',
   trust: [
     { icon: 'zap', label: 'Tecnologia de ponta' },
     { icon: 'shield', label: 'Conformidade regulatória' },
@@ -123,10 +131,35 @@ export const quote = {
 } as const satisfies {
   eyebrow: string
   title: string
+  highlight: string
   text: string
+  whatsappPrompt: string
+  whatsappLabel: string
+  formTitle: string
+  formText: string
   trust: readonly [TrustItem, TrustItem, TrustItem]
   lgpd: string
 }
+
+/**
+ * Prévia dos campos do formulário de cotação, só fora do WordPress: no lugar do texto cru do
+ * shortcode, a página mostra como o formulário aparece (mockup de 27/10/2026). No WordPress o
+ * plugin troca o shortcode pelo formulário de verdade e esta prévia não é usada.
+ */
+export const formPreview = {
+  fields: [
+    { id: 'nome', label: 'Nome', type: 'text' },
+    { id: 'empresa', label: 'Empresa', type: 'text' },
+    { id: 'email', label: 'E-mail corporativo', type: 'email' },
+    { id: 'whatsapp', label: 'WhatsApp', type: 'tel' },
+  ],
+  message: {
+    id: 'aplicacao',
+    label: 'Conte sobre sua aplicação',
+    placeholder: 'Produto, embalagem e necessidade de codificação.',
+  },
+  submit: 'Solicitar minha cotação',
+} as const
 
 /* ------------------------------------------------------------------ footer */
 

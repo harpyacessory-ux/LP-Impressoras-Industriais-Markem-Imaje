@@ -2,104 +2,223 @@
 /**
  * ESTRUTURA FIXA (PROMPT-PADRAO-LP 4.1.4). Grid 1.05fr · 1fr: formulário (shortcode) à esquerda, texto à direita.
  * Mobile: texto antes do formulário. O formulário é sempre o shortcode, nunca um <form> próprio.
+ *
+ * Desvio visual do mockup da cotação da Print Master (27/10/2026 — docs/BRIEFING.md): seção
+ * verde-escura; o shortcode fica num card branco com cabeçalho e a nota de LGPD com cadeado;
+ * à direita, H2 com o fim em menta, convite e botão de WhatsApp e 3 selos em duas linhas.
+ * Fora do WordPress, o shortcode cru vira a prévia dos campos do mockup (script abaixo).
  */
 import Icon from './Icon.astro'
-import Eyebrow from './Eyebrow.astro'
-import { quote, cta } from '../data/content'
+import { quote, formPreview } from '../data/content'
 import { site } from '../data/site'
 
 const isDev = import.meta.env.DEV
+
+// O fim do H2 vai em menta (mockup); o texto continua sendo `quote.title`.
+const at = quote.title.lastIndexOf(quote.highlight)
+const titleBefore = at >= 0 ? quote.title.slice(0, at) : quote.title
+const titleAfter = at >= 0 ? quote.title.slice(at + quote.highlight.length) : ''
+
+/** Quebra o selo em duas linhas o mais equilibradas possível: "Tecnologia / de ponta". */
+const twoLines = (label: string) => {
+  const words = label.split(' ')
+  let best = 1
+  for (let i = 1; i < words.length; i++) {
+    const diff = Math.abs(words.slice(0, i).join(' ').length - words.slice(i).join(' ').length)
+    const bestDiff = Math.abs(
+      words.slice(0, best).join(' ').length - words.slice(best).join(' ').length,
+    )
+    if (diff < bestDiff) best = i
+  }
+  return [words.slice(0, best).join(' '), words.slice(best).join(' ')]
+}
 ---
 
-<section id="cotacao" class="bg-neutral-gray-100 pt-8 pb-20">
-  <div class="mx-auto max-w-page px-6 lg:px-10">
+<section id="cotacao" class="quote-section relative overflow-hidden pt-16 pb-20 lg:pt-20 lg:pb-24">
+  <div class="relative mx-auto max-w-page px-6 lg:px-10">
     <div class="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:items-center lg:gap-16">
       {/* Coluna do formulário */}
       <div class="order-2 w-full lg:order-1">
-        <slot name="shortcode">
-          {isDev ? (
-            <div
-              class="flex min-h-[520px] w-full flex-col gap-3 rounded-2xl border border-neutral-gray-200/70 bg-neutral-light p-6 shadow-[0_14px_32px_-26px_rgba(0,24,48,0.5)]"
-              aria-label="Mock do formulário (só em desenvolvimento)"
-            >
-              <span class="font-sans text-[11px] font-semibold tracking-[0.18em] text-accent-orange uppercase">
-                Mock · formulário
-              </span>
-              <div class="grid gap-3 sm:grid-cols-2">
-                <div class="h-11 rounded border border-neutral-gray-200/70 bg-neutral-gray-100" />
-                <div class="h-11 rounded border border-neutral-gray-200/70 bg-neutral-gray-100" />
-                <div class="h-11 rounded border border-neutral-gray-200/70 bg-neutral-gray-100" />
-                <div class="h-11 rounded border border-neutral-gray-200/70 bg-neutral-gray-100" />
-                <div class="h-28 rounded border border-neutral-gray-200/70 bg-neutral-gray-100 sm:col-span-2" />
-              </div>
-              <div class="mt-auto h-12 w-full rounded bg-accent-orange/80 sm:w-48" />
-            </div>
-          ) : (
-            <div class="flex min-h-[520px] w-full flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-primary-dark/25 bg-neutral-light p-8 text-center shadow-[0_14px_32px_-26px_rgba(0,24,48,0.5)]">
-              <span class="font-sans text-[11px] font-semibold tracking-[0.18em] text-accent-orange uppercase">
-                Espaço reservado
-              </span>
-              <p class="font-display text-lg font-bold text-ink">
-                Shortcode — formulário de cotação
+        <div class="rounded-2xl bg-neutral-light p-6 shadow-[0_40px_80px_-40px_rgba(0,0,0,0.6)] sm:p-9">
+          <div class="flex items-center gap-4 sm:gap-5">
+            <span class="flex size-14 shrink-0 items-center justify-center rounded-full bg-[#dff3ea] text-primary-dark sm:size-20">
+              <Icon name="file-text" class="size-6 sm:size-9" />
+            </span>
+            <div class="min-w-0">
+              <h3 class="font-display text-[1.35rem] leading-tight font-extrabold tracking-[-0.02em] text-ink sm:text-[1.9rem]">
+                {quote.formTitle}
+              </h3>
+              <p class="mt-1 font-sans text-[14px] leading-snug text-ink-soft sm:text-[15px]">
+                {quote.formText}
               </p>
             </div>
-          )}
-        </slot>
+          </div>
 
-        {/* Nota de LGPD */}
-        <p class="mt-3 font-sans text-[11px] leading-relaxed text-ink-soft/80">
-          {quote.lgpd}
-          {site.privacyUrl && (
-            <>
-              {' '}
-              <a
-                href={site.privacyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="font-semibold text-primary-dark underline-offset-2 hover:underline"
-              >
-                Política de privacidade
-              </a>
-              .
-            </>
-          )}
-        </p>
+          <div class="mt-7" data-shortcode-slot>
+            <slot name="shortcode">
+              {isDev ? (
+                <div
+                  class="flex min-h-[360px] w-full flex-col gap-3 rounded-xl border border-dashed border-primary-dark/25 p-6"
+                  aria-label="Mock do formulário (só em desenvolvimento)"
+                >
+                  <span class="font-sans text-[11px] font-semibold tracking-[0.18em] text-accent-orange uppercase">
+                    Mock · formulário
+                  </span>
+                </div>
+              ) : (
+                <div class="flex min-h-[360px] w-full flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-primary-dark/25 p-8 text-center">
+                  <span class="font-sans text-[11px] font-semibold tracking-[0.18em] text-accent-orange uppercase">
+                    Espaço reservado
+                  </span>
+                  <p class="font-display text-lg font-bold text-ink">
+                    Shortcode — formulário de cotação
+                  </p>
+                </div>
+              )}
+            </slot>
+          </div>
+          {/* Prévia dos campos: só entra no lugar do shortcode cru, fora do WordPress. */}
+          <template>
+            <div class="grid gap-x-6 gap-y-5 sm:grid-cols-2">
+              {formPreview.fields.map((field) => (
+                <label class="flex flex-col gap-2 font-sans text-[14px] font-semibold text-ink">
+                  {field.label}
+                  <input
+                    type={field.type}
+                    name={field.id}
+                    class="h-12 rounded-lg border border-ink/15 bg-[#f5f8f7] px-4 font-sans text-[15px] font-normal text-ink transition-colors duration-200 outline-none focus:border-accent-orange focus:bg-neutral-light"
+                  />
+                </label>
+              ))}
+              <label class="flex flex-col gap-2 font-sans text-[14px] font-semibold text-ink sm:col-span-2">
+                {formPreview.message.label}
+                <textarea
+                  name={formPreview.message.id}
+                  rows="4"
+                  placeholder={formPreview.message.placeholder}
+                  class="resize-y rounded-lg border border-ink/15 bg-[#f5f8f7] px-4 py-3 font-sans text-[15px] font-normal text-ink transition-colors duration-200 outline-none placeholder:text-ink-soft focus:border-accent-orange focus:bg-neutral-light"
+                ></textarea>
+              </label>
+            </div>
+            <button
+              type="button"
+              data-cta="cotacao-enviar"
+              class="btn-slave-whats mt-6 flex w-full items-center justify-center gap-3 rounded-lg bg-primary-dark px-6 py-4 font-sans text-[17px] font-semibold text-neutral-light transition-colors duration-200 hover:bg-primary-dark-800"
+            >
+              {formPreview.submit}
+              <Icon name="arrow-right" class="size-5 shrink-0" />
+            </button>
+          </template>
+          {/*
+            Fora do WordPress o shortcode chega como texto cru ("[atendimento_form …]"). Este
+            script roda durante o parse, antes da primeira pintura, e troca o texto pela prévia
+            dos campos. No WordPress o plugin já trocou o shortcode e o script não faz nada.
+          */}
+          <script is:inline>
+            ;(() => {
+              const preview = document.currentScript?.previousElementSibling
+              const slot = preview?.previousElementSibling
+              if (!slot || !preview || /wordpress|printmaster\.net\.br/i.test(location.hostname))
+                return
+              if (slot.children.length === 0 && /^\[[^\]]+\]$/.test(slot.textContent.trim()))
+                slot.replaceChildren(preview.content.cloneNode(true))
+            })()
+          </script>
+          {/* Nota de LGPD */}
+          <p class="mt-5 flex items-start gap-2.5 font-sans text-[13px] leading-relaxed text-ink-soft">
+            <Icon name="lock" class="mt-0.5 size-[18px] shrink-0 text-ink" />
+            <span>
+              {quote.lgpd}
+              {site.privacyUrl && (
+                <>
+                  {' '}
+                  <a
+                    href={site.privacyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="font-semibold text-primary-dark underline-offset-2 hover:underline"
+                  >
+                    Política de privacidade
+                  </a>
+                  .
+                </>
+              )}
+            </span>
+          </p>
+        </div>
       </div>
 
       {/* Coluna de texto */}
       <div class="order-1 lg:order-2">
-        <Eyebrow>{quote.eyebrow}</Eyebrow>
+        <span class="inline-flex items-center gap-4 font-sans text-[12px] font-medium tracking-[0.3em] text-neutral-light/85 uppercase">
+          <span aria-hidden="true" class="h-1 w-11 rounded-full bg-brand-glow"></span>
+          {quote.eyebrow}
+        </span>
 
-        <h2 class="mt-3 font-display text-3xl leading-tight font-extrabold text-ink sm:text-4xl">
-          {quote.title}
+        <h2 class="mt-5 font-display text-[2.3rem] leading-[1.05] font-extrabold tracking-[-0.03em] text-neutral-light sm:text-5xl xl:text-[3rem]">
+          {titleBefore}
+          {at >= 0 && <span class="text-brand-glow">{quote.highlight}</span>}
+          {titleAfter}
         </h2>
 
-        <span aria-hidden="true" class="mt-5 block h-[3px] w-16 bg-accent-orange"></span>
-
-        <p class="mt-5 font-sans text-[15px] leading-relaxed text-ink-soft sm:text-base">
+        <p class="mt-6 max-w-[38rem] font-sans text-base leading-relaxed text-neutral-light/85 sm:text-lg">
           {quote.text}
         </p>
 
-        <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <button
-            type="button"
-            data-cta="cotacao-whatsapp"
-            class="btn-slave-whats inline-flex items-center justify-center gap-2.5 bg-primary-dark px-6 py-3.5 font-sans text-[15px] font-semibold text-neutral-light transition-colors duration-200 hover:bg-primary-dark-800"
-          >
-            <Icon name="whatsapp" class="size-4 shrink-0" />
-            {cta.whatsapp}
-          </button>
-        </div>
+        <p class="mt-8 font-sans text-[17px] font-semibold text-neutral-light">
+          {quote.whatsappPrompt}
+        </p>
+        <button
+          type="button"
+          data-cta="cotacao-whatsapp"
+          class="btn-slave-whats mt-4 inline-flex w-full items-center justify-center gap-3 rounded-xl sm:gap-4 bg-brand-emerald bg-[linear-gradient(180deg,#0a8f61_0%,#06784f_100%)] px-5 py-[1.15rem] font-sans text-[17px] font-bold sm:px-8 sm:text-[18px] text-neutral-light shadow-[0_18px_44px_-18px_rgba(26,165,122,0.9)] ring-1 ring-brand-glow/25 transition-[filter] duration-200 ring-inset hover:brightness-110 sm:w-auto"
+        >
+          <Icon name="whatsapp" class="size-7 shrink-0" />
+          {quote.whatsappLabel}
+          <Icon name="arrow-right" class="size-5 shrink-0" />
+        </button>
 
-        <ul class="mt-7 flex flex-wrap gap-x-6 gap-y-2.5">
-          {quote.trust.map((item) => (
-            <li class="flex items-center gap-2 font-sans text-[13px] font-medium text-ink">
-              <Icon name={item.icon} class="size-4 shrink-0 text-accent-orange" />
-              {item.label}
-            </li>
-          ))}
+        <ul class="mt-9 grid grid-cols-3 border-t border-neutral-light/15 pt-7 sm:flex sm:justify-between">
+          {quote.trust.map((item) => {
+            const [line1, line2] = twoLines(item.label)
+            return (
+              <li class="quote-trust flex flex-col items-start gap-2.5 sm:flex-row sm:items-center sm:gap-3.5">
+                <Icon name={item.icon} class="size-8 shrink-0 text-brand-glow sm:size-9" />
+                <span class="font-sans text-[14px] leading-snug text-neutral-light sm:text-[15px]">
+                  <span class="block">{line1}</span>
+                  <span class="block">{line2}</span>
+                </span>
+              </li>
+            )
+          })}
         </ul>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  /* Seção verde-escura, mais clara no alto à esquerda, como no mockup. */
+  .quote-section {
+    background:
+      radial-gradient(60% 70% at 15% 0%, rgb(255 255 255 / 0.07) 0%, transparent 70%),
+      linear-gradient(
+        160deg,
+        var(--color-primary-dark-800) 0%,
+        var(--color-primary-dark) 45%,
+        var(--color-primary-dark-900) 100%
+      );
+  }
+
+  /* Divisórias entre os selos. */
+  .quote-trust + .quote-trust {
+    padding-left: 1rem;
+    border-left: 1px solid rgb(255 255 255 / 0.15);
+  }
+
+  @media (min-width: 640px) {
+    .quote-trust + .quote-trust {
+      padding-left: 1.5rem;
+    }
+  }
+</style>

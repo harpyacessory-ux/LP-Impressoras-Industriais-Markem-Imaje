@@ -93,9 +93,10 @@ conteudo:
         line1: Suporte
         line2: especializado
   quote:
-    eyebrow: Solicite sua cotação
+    # mockup da cotação de 27/10/2026
+    eyebrow: Atendimento Print Master
     title: Fale com quem entende de impressoras industriais.
-    text: Nossa equipe ajuda a escolher o equipamento certo para a sua linha e a sua embalagem. Preencha o formulário ou fale direto conosco pelo WhatsApp.
+    text: Nossa equipe ajuda a escolher o equipamento certo para a sua linha e sua embalagem. Preencha o formulário ou fale diretamente conosco pelo WhatsApp.
     trust:
       - icon: zap
         label: Tecnologia de ponta

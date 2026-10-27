@@ -230,17 +230,19 @@ for (const f of astroFiles) {
   }
 
   // A seção de Cotação é a única que pode trazer o ritmo de fechamento embutido.
+  // Repinada em 27/10/2026 (mockup da cotação da Print Master, docs/BRIEFING.md): a Cotação é
+  // verde-escura (classe `quote-section`) e abre com mais respiro (`pt-16 pb-20`). O modelo de
+  // respiro do B4 continua calculando com o tom e o ritmo de fechamento do padrão.
+  const quoteRhythm = 'pt-16 pb-20' // padrão: RHYTHMS[CONVERSION_RHYTHM].class
+  const quoteTone = 'quote-section' // padrão: TONES[CONVERSION_TONE].class
   const quote = rawRead(join(SRC, 'components', 'QuoteForm.astro'))
-  if (!quote.includes(RHYTHMS[CONVERSION_RHYTHM].class))
+  if (!quote.includes(quoteRhythm))
     fail(
       join(SRC, 'components', 'QuoteForm.astro'),
-      `a Cotação deve usar o ritmo de fechamento "${RHYTHMS[CONVERSION_RHYTHM].class}"`,
+      `a Cotação deve usar o ritmo de fechamento "${quoteRhythm}"`,
     )
-  if (!quote.includes(TONES[CONVERSION_TONE].class))
-    fail(
-      join(SRC, 'components', 'QuoteForm.astro'),
-      `a Cotação deve usar o fundo "${TONES[CONVERSION_TONE].class}"`,
-    )
+  if (!quote.includes(quoteTone))
+    fail(join(SRC, 'components', 'QuoteForm.astro'), `a Cotação deve usar o fundo "${quoteTone}"`)
 }
 
 /* A9. rhythm.mjs e layout.ts não podem divergir ----------------------------- */

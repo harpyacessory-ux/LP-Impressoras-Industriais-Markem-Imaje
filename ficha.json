@@ -1,6 +1,6 @@
 {
   "ficha": 1,
-  "gerado": "2026-10-27T13:41:41.526Z",
+  "gerado": "2026-10-27T15:02:20.116Z",
   "origem": "docs/FICHA-LP.md",
   "padrao": "2.8.0",
   "cliente": "Print Master",
@@ -119,9 +119,9 @@
       ]
     },
     "quote": {
-      "eyebrow": "Solicite sua cotação",
+      "eyebrow": "Atendimento Print Master",
       "title": "Fale com quem entende de impressoras industriais.",
-      "text": "Nossa equipe ajuda a escolher o equipamento certo para a sua linha e a sua embalagem. Preencha o formulário ou fale direto conosco pelo WhatsApp.",
+      "text": "Nossa equipe ajuda a escolher o equipamento certo para a sua linha e sua embalagem. Preencha o formulário ou fale diretamente conosco pelo WhatsApp.",
       "trust": [
         {
           "icon": "zap",
