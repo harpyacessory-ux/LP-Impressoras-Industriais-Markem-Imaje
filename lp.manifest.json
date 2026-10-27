@@ -92,7 +92,7 @@
     {
       "slug": "processo",
       "id": "processo",
-      "title": "Como funciona (etapas)",
+      "title": "Como funciona (banner)",
       "phase": "apoio",
       "component": "ProcessSteps.astro",
       "data": "processo.ts",
@@ -111,23 +111,28 @@
       "ctas": [
         "processo-cta"
       ],
-      "contract": {
-        "itemsPath": "steps",
-        "itemsMin": 4,
-        "itemsMax": 6,
-        "requiredItemFields": [
-          "id",
-          "icon",
-          "title",
-          "description"
-        ],
-        "maxLength": {
-          "text": 170,
-          "microcopy": 48,
-          "item.description": 90
+      "contract": {},
+      "assets": [
+        {
+          "dir": "processo",
+          "match": "banner",
+          "files": "banner.jpg",
+          "spec": "Banner 1870×841 com texto e CTA na arte (variante local)",
+          "width": 1870,
+          "height": 841,
+          "alpha": false
+        },
+        {
+          "dir": "processo",
+          "match": "recorte-mobile",
+          "files": "recorte-mobile.jpg",
+          "spec": "Recorte 800×720 do lado do texto do banner, para o celular",
+          "width": 800,
+          "height": 720,
+          "alpha": false
         }
-      },
-      "assets": []
+      ],
+      "localVariant": "Print Master 27/10/2026 — pedido do usuário: o painel das etapas deu lugar ao banner clicável (processo-cta), com recorte próprio no celular (docs/BRIEFING.md)"
     },
     {
       "slug": "aplicacoes",

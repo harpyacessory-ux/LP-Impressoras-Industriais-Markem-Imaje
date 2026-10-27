@@ -205,6 +205,8 @@ blocos:
     responde: [produto-categoria]
     papeis: [Produção, Compras]
     # inferido do material ("suporte em todas as etapas, desde a escolha do equipamento até o pós-venda"); sem prazos
+    # na página, desde 27/10/2026, o painel das etapas deu lugar ao banner enviado pelo usuário (variante local);
+    # as etapas ficam registradas aqui para quando o banner sair
     eyebrow: Como funciona
     title: Da escolha do equipamento ao pós-venda
     microcopy: Suporte técnico em todas as etapas

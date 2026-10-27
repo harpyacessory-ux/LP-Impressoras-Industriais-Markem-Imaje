@@ -1,60 +1,30 @@
 /**
  * Dados da seção "Como funciona" (biblioteca B2, fase: apoio).
  *
- * Alternativa ao painel de identificação para quando o atrito do visitante não é
- * "não sei o que pedir" e sim "não sei como isso acontece" — típico de serviço,
- * instalação, adequação a norma e contrato de manutenção.
- *
- * 4 a 6 etapas. Com 3 a promessa parece rasa; com 7 ninguém lê.
+ * VARIANTE LOCAL — Print Master, pedido de 27/10/2026 (docs/BRIEFING.md): no lugar do painel
+ * com as 4 etapas entra o banner enviado pelo usuário, clicável (CTA `processo-cta`). O texto
+ * do banner está na imagem; `title` e `alt` repetem esse texto para leitores de tela e busca.
+ * As etapas continuam registradas na ficha (`docs/FICHA-LP.md`) para quando o banner sair.
  */
-import type { IconName } from '@data/icons'
+import type { Photo } from '@data/types'
 
-export interface ProcessStep {
-  id: string
-  icon: IconName
-  title: string
-  description: string
-  /** Prazo ou marco da etapa, 2–4 palavras. Opcional. */
-  when?: string
-}
+import banner from '@assets/processo/banner.jpg'
+import recorteMobile from '@assets/processo/recorte-mobile.jpg'
 
-/** Sem prazos confirmados no material: nenhuma etapa leva `when`. */
-export const process: {
-  eyebrow: string
+const alt =
+  'Print Master e Markem-Imaje: impressoras industriais para codificação e rastreabilidade com ' +
+  'mais precisão. Tecnologia Markem-Imaje e suporte especializado da Print Master para sua ' +
+  'indústria. Fale com nossos especialistas.'
+
+export const process = {
+  /** H2 só para leitores de tela: o título visível está no banner. */
+  title: 'Impressoras industriais para codificação e rastreabilidade com mais precisão.',
+  /** Banner inteiro (desktop e tablet). */
+  banner: { src: banner, alt },
+  /** Recorte do lado do texto, para o celular: o banner inteiro ficaria ilegível. */
+  bannerMobile: { src: recorteMobile, alt },
+} as const satisfies {
   title: string
-  text: string
-  microcopy: string
-  steps: readonly ProcessStep[]
-} = {
-  eyebrow: 'Como funciona',
-  title: 'Da escolha do equipamento ao pós-venda',
-  text: 'Acompanhamos a sua linha em cada etapa, da escolha da tecnologia de codificação à assistência depois da instalação.',
-  microcopy: 'Suporte técnico em todas as etapas',
-  steps: [
-    {
-      id: 'diagnostico',
-      icon: 'search',
-      title: 'Diagnóstico da linha',
-      description: 'Entendemos o produto, a embalagem e a velocidade da sua linha de produção.',
-    },
-    {
-      id: 'tecnologia',
-      icon: 'sliders',
-      title: 'Escolha da tecnologia',
-      description:
-        'Indicamos jato de tinta, transferência térmica ou Print & Apply para o seu caso.',
-    },
-    {
-      id: 'instalacao',
-      icon: 'wrench',
-      title: 'Instalação',
-      description: 'Entregamos e integramos o equipamento à sua linha de produção.',
-    },
-    {
-      id: 'suporte',
-      icon: 'users',
-      title: 'Suporte e pós-venda',
-      description: 'Equipe técnica preparada para apoiar a sua operação depois da instalação.',
-    },
-  ],
+  banner: Photo
+  bannerMobile: Photo
 }
