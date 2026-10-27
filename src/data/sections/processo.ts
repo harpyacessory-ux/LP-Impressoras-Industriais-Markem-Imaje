@@ -14,7 +14,7 @@ import recorteMobile from '@assets/processo/recorte-mobile.jpg'
 const alt =
   'Print Master e Markem-Imaje: impressoras industriais para codificação e rastreabilidade com ' +
   'mais precisão. Tecnologia Markem-Imaje e suporte especializado da Print Master para sua ' +
-  'indústria. Fale com nossos especialistas.'
+  'indústria.'
 
 export const process = {
   /** H2 só para leitores de tela: o título visível está no banner. */

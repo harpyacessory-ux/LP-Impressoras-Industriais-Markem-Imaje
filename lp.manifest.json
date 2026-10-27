@@ -117,7 +117,7 @@
           "dir": "processo",
           "match": "banner",
           "files": "banner.jpg",
-          "spec": "Banner 1870×841 com texto e CTA na arte (variante local)",
+          "spec": "Banner 1870×841 com texto na arte, sem botão desenhado (variante local)",
           "width": 1870,
           "height": 841,
           "alpha": false
@@ -126,9 +126,9 @@
           "dir": "processo",
           "match": "recorte-mobile",
           "files": "recorte-mobile.jpg",
-          "spec": "Recorte 800×720 do lado do texto do banner, para o celular",
+          "spec": "Recorte 800×600 do lado do texto do banner, para o celular",
           "width": 800,
-          "height": 720,
+          "height": 600,
           "alpha": false
         }
       ],
